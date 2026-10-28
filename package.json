@@ -8,10 +8,10 @@
     "email": "akilshehan760@gmail.com"
   },
   "license": "MIT",
-  "homepage": "https://github.com/Sh3hann/dynamic-Island",
+  "homepage": "https://github.com/Sh3hann/ORBIT-dynamic-Island",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Sh3hann/dynamic-Island.git"
+    "url": "git+https://github.com/Sh3hann/ORBIT-dynamic-Island.git"
   },
   "main": "electron/main.cjs",
   "type": "module",

@@ -32,7 +32,7 @@
 
 ## Install
 
-1. Download **`ORBIT-Setup-<version>.exe`** from the [Releases](https://github.com/Sh3hann/dynamic-Island/releases) page.
+1. Download **`ORBIT-Setup-1.0.0.exe`** from the [Releases](https://github.com/Sh3hann/ORBIT-dynamic-Island/releases/latest) page.
 2. Run it and follow the installer. No Node.js, npm or other tools are needed.
 3. ORBIT starts automatically and appears at the top-centre of your screen. Use the tray icon to expand,
    open the settings or quit.
@@ -51,8 +51,8 @@
 Requires Node.js 20+ on Windows.
 
 ```powershell
-git clone https://github.com/Sh3hann/dynamic-Island.git
-cd dynamic-Island
+git clone https://github.com/Sh3hann/ORBIT-dynamic-Island.git
+cd ORBIT-dynamic-Island
 npm install
 npm run build
 npm start          # run from source

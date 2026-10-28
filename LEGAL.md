@@ -64,5 +64,5 @@ the shelf and notifications at any time from inside the app.
 ## 6. Security reports & contact
 
 Please report vulnerabilities privately by e-mail to **akilshehan760@gmail.com** or through a private GitHub
-security advisory on <https://github.com/Sh3hann/dynamic-Island>. Do not open public issues for
+security advisory on <https://github.com/Sh3hann/ORBIT-dynamic-Island>. Do not open public issues for
 security problems.
