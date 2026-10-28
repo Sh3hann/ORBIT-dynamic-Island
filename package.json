@@ -1,0 +1,91 @@
+{
+  "name": "orbit-island",
+  "productName": "ORBIT",
+  "version": "1.0.0",
+  "description": "ORBIT - a Dynamic Island style, always-on-top, low-resource desktop companion for Windows",
+  "author": {
+    "name": "Sh3hann",
+    "email": "akilshehan760@gmail.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Sh3hann/dynamic-Island",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sh3hann/dynamic-Island.git"
+  },
+  "main": "electron/main.cjs",
+  "type": "module",
+  "scripts": {
+    "dev:vite": "vite --port 5173 --strictPort",
+    "dev:electron": "electron .",
+    "start": "electron .",
+    "build": "vite build",
+    "icons": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/make-icons.ps1",
+    "dist": "vite build && electron-builder --win nsis --x64"
+  },
+  "dependencies": {
+    "framer-motion": "^11.15.0",
+    "lucide-react": "^0.469.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^39.0.0",
+    "electron-builder": "^26.0.0",
+    "vite": "^6.0.5"
+  },
+  "build": {
+    "appId": "com.sh3hann.orbit",
+    "productName": "ORBIT",
+    "copyright": "Copyright (c) 2026 Sh3hann",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/main.cjs",
+      "electron/preload.cjs",
+      "electron/notif-worker.cjs",
+      "electron/win-bridge.ps1",
+      "electron/tray-icon.png",
+      "electron/tray-icon.ico",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "electron/win-bridge.ps1",
+      "electron/notif-worker.cjs"
+    ],
+    "extraResources": [
+      { "from": "LICENSE", "to": "LICENSE.txt" },
+      { "from": "THIRD_PARTY_NOTICES.md", "to": "THIRD_PARTY_NOTICES.md" }
+    ],
+    "compression": "maximum",
+    "electronLanguages": ["en-US"],
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "icon": "build/icon.ico",
+      "artifactName": "ORBIT-Setup-${version}.${ext}",
+      "legalTrademarks": "ORBIT"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "ORBIT",
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": true,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "installerHeader": "build/installerHeader.bmp",
+      "installerSidebar": "build/installerSidebar.bmp",
+      "uninstallerSidebar": "build/installerSidebar.bmp",
+      "license": "LICENSE",
+      "include": "build/installer.nsh"
+    }
+  }
+}

@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ORBIT</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-font-smoothing: antialiased;
+      }
+      input, textarea {
+        user-select: text !important;
+        -webkit-user-select: text !important;
+      }
+      html, body, #root {
+        width: 100%;
+        height: 100%;
+        background: transparent !important;
+        overflow: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI Variable Display", "Segoe UI", Inter, sans-serif;
+      }
+
+      /* GPU-Composited Zero-CPU Audio Waveform Animation */
+      @keyframes iosWaveBar1 {
+        0%, 100% { transform: scaleY(0.28); }
+        50% { transform: scaleY(0.96); }
+      }
+      @keyframes iosWaveBar2 {
+        0%, 100% { transform: scaleY(0.65); }
+        40% { transform: scaleY(0.25); }
+        80% { transform: scaleY(1.0); }
+      }
+      @keyframes iosWaveBar3 {
+        0%, 100% { transform: scaleY(0.9); }
+        35% { transform: scaleY(0.35); }
+        70% { transform: scaleY(0.75); }
+      }
+      @keyframes iosWaveBar4 {
+        0%, 100% { transform: scaleY(0.35); }
+        55% { transform: scaleY(0.92); }
+      }
+      @keyframes iosWaveBar5 {
+        0%, 100% { transform: scaleY(0.72); }
+        45% { transform: scaleY(0.3); }
+        85% { transform: scaleY(0.88); }
+      }
+
+      .ios-wave-bar {
+        transform-origin: center center;
+        will-change: transform;
+        transition: transform 0.25s ease;
+      }
+
+      /* Registered CSS Custom Properties (<color>) for 60fps Smooth Gradient Interpolation */
+      @property --album-c1 {
+        syntax: '<color>';
+        inherits: true;
+        initial-value: rgba(0, 0, 0, 0);
+      }
+      @property --album-c2 {
+        syntax: '<color>';
+        inherits: true;
+        initial-value: rgba(0, 0, 0, 0);
+      }
+      @property --lyric-c1 {
+        syntax: '<color>';
+        inherits: true;
+        initial-value: rgba(255, 255, 255, 0.05);
+      }
+      @property --lyric-c2 {
+        syntax: '<color>';
+        inherits: true;
+        initial-value: rgba(255, 255, 255, 0.05);
+      }
+      @property --notif-glow {
+        syntax: '<color>';
+        inherits: true;
+        initial-value: rgba(0, 0, 0, 0);
+      }
+
+      .smooth-color-surface {
+        transition:
+          --album-c1 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+          --album-c2 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+          --lyric-c1 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+          --lyric-c2 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+          --notif-glow 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+          background-color 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      @keyframes btFloatLeft {
+        0%, 100% { transform: translateY(0px) rotate(-6deg); }
+        50% { transform: translateY(-3.5px) rotate(-2deg); }
+      }
+      @keyframes btFloatRight {
+        0%, 100% { transform: translateY(0px) rotate(6deg); }
+        50% { transform: translateY(-3.5px) rotate(2deg); }
+      }
+      @keyframes btFloatBox {
+        0%, 100% { transform: translateY(0px) scale(1); }
+        50% { transform: translateY(2px) scale(1.03); }
+      }
+
+      .bt-anim-left {
+        animation: btFloatLeft 2.6s ease-in-out infinite;
+        transform-origin: center center;
+      }
+      .bt-anim-right {
+        animation: btFloatRight 2.6s ease-in-out infinite 0.2s;
+        transform-origin: center center;
+      }
+      .bt-anim-box {
+        animation: btFloatBox 2.6s ease-in-out infinite 0.4s;
+        transform-origin: center center;
+      }
+
+      /* Sleek minimal scrollbar inside shelf/downloads */
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 99px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
