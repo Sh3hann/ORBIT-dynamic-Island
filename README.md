@@ -16,14 +16,6 @@
 
 ---
 
-## Screenshots
-
-> Screenshots of the bar go here. Put the image files in [`docs/screenshots`](docs/screenshots) and reference them below.
-
-<!-- Example:
-<p align="center"><img src="docs/screenshots/music.png" width="420" /></p>
--->
-
 ## Features
 
 - **Music** – shows what is playing on Spotify, YouTube or YouTube Music with album art, album-colour

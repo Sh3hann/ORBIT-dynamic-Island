@@ -1042,7 +1042,7 @@ export default function DynamicIsland() {
     }
     if (isExpanded) {
       if (showSettingsPanel) {
-        return { width: 416, height: 274, borderRadius: 38 };
+        return { width: 416, height: 306, borderRadius: 38 };
       }
       switch (activePage) {
         case 'media':
@@ -1718,7 +1718,7 @@ export default function DynamicIsland() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          gap: 7
+          gap: 5
         }}
       >
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 5 }}>
