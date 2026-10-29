@@ -14,5 +14,13 @@
       <image:loc>https://sh3hann.github.io/ORBIT-dynamic-Island/logo.png</image:loc>
       <image:title>ORBIT Logo</image:title>
     </image:image>
+    <image:image>
+      <image:loc>https://sh3hann.github.io/ORBIT-dynamic-Island/poster.png</image:loc>
+      <image:title>ORBIT Dynamic Island Official Release Poster</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sh3hann.github.io/ORBIT-dynamic-Island/poster-landscape.png</image:loc>
+      <image:title>ORBIT Dynamic Island Official Banner Poster</image:title>
+    </image:image>
   </url>
 </urlset>
