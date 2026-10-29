@@ -21,7 +21,8 @@
     "start": "electron .",
     "build": "vite build",
     "icons": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/make-icons.ps1",
-    "dist": "vite build && electron-builder --win nsis --x64"
+    "dist": "vite build && electron-builder --win nsis --x64",
+    "dist:mac": "vite build && electron-builder --mac dmg zip --universal"
   },
   "dependencies": {
     "framer-motion": "^11.15.0",
@@ -68,6 +69,17 @@
       "icon": "build/icon.ico",
       "artifactName": "ORBIT-Setup-${version}.${ext}",
       "legalTrademarks": "ORBIT"
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": [
+        { "target": "dmg", "arch": ["universal", "x64", "arm64"] },
+        { "target": "zip", "arch": ["universal", "x64", "arm64"] }
+      ],
+      "icon": "build/icon.png",
+      "artifactName": "ORBIT-Mac-${version}-${arch}.${ext}",
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false
     },
     "nsis": {
       "oneClick": false,

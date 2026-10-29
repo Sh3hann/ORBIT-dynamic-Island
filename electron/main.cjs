@@ -89,6 +89,7 @@ function isAutoStartEnabled() {
 }
 
 function regDelete(name) {
+  if (process.platform !== 'win32') return;
   try {
     execFileSync('reg.exe', ['delete', REG_RUN_KEY, '/v', name, '/f'], {
       windowsHide: true,
@@ -102,27 +103,35 @@ function applyWindowsStartupRegistration(enable) {
     fs.writeFileSync(AUTO_START_CONFIG_FILE, JSON.stringify({ enabled: Boolean(enable) }), 'utf8');
   } catch (_e) {}
 
-  LEGACY_REG_VALUE_NAMES.forEach(regDelete);
-
-  try {
-    if (app.isPackaged) {
-      // Installed build: launch the ORBIT executable directly (no console window, no scripts)
+  if (process.platform === 'win32') {
+    LEGACY_REG_VALUE_NAMES.forEach(regDelete);
+    try {
+      if (app.isPackaged) {
+        // Installed build: launch the ORBIT executable directly (no console window, no scripts)
+        app.setLoginItemSettings({
+          openAtLogin: Boolean(enable),
+          path: process.execPath,
+          name: REG_VALUE_NAME
+        });
+      } else if (enable) {
+        const vbsPath = path.join(PROJECT_ROOT, 'scripts', 'Start-ORBIT.vbs');
+        execFileSync(
+          'reg.exe',
+          ['add', REG_RUN_KEY, '/v', REG_VALUE_NAME, '/t', 'REG_SZ', '/d', `wscript.exe "${vbsPath}"`, '/f'],
+          { windowsHide: true, stdio: 'ignore' }
+        );
+      } else {
+        regDelete(REG_VALUE_NAME);
+      }
+    } catch (_e) {}
+  } else if (process.platform === 'darwin') {
+    try {
       app.setLoginItemSettings({
         openAtLogin: Boolean(enable),
-        path: process.execPath,
-        name: REG_VALUE_NAME
+        openAsHidden: true
       });
-    } else if (enable) {
-      const vbsPath = path.join(PROJECT_ROOT, 'scripts', 'Start-ORBIT.vbs');
-      execFileSync(
-        'reg.exe',
-        ['add', REG_RUN_KEY, '/v', REG_VALUE_NAME, '/t', 'REG_SZ', '/d', `wscript.exe "${vbsPath}"`, '/f'],
-        { windowsHide: true, stdio: 'ignore' }
-      );
-    } else {
-      regDelete(REG_VALUE_NAME);
-    }
-  } catch (_e) {}
+    } catch (_e) {}
+  }
 
   updateTrayMenu();
   return Boolean(enable);
@@ -161,14 +170,15 @@ function calculateCpuUsage() {
   return {
     avgCpu,
     coreLoads: coreLoads.slice(0, 8),
-    cpuModel: (current[0]?.model || 'Windows Processor').trim(),
+    cpuModel: (current[0]?.model || (process.platform === 'darwin' ? 'Apple Silicon' : 'Processor')).trim(),
     coresCount: current.length
   };
 }
 
 function getDiskUsageC() {
   try {
-    const stats = fs.statfsSync('C:\\');
+    const rootPath = process.platform === 'win32' ? 'C:\\' : '/';
+    const stats = fs.statfsSync(rootPath);
     const totalBytes = stats.blocks * stats.bsize;
     const freeBytes = stats.bfree * stats.bsize;
     const usedBytes = totalBytes - freeBytes;
@@ -205,6 +215,7 @@ let latestBridgeState = {
 };
 
 function startNativeWindowsBridge() {
+  if (process.platform !== 'win32') return;
   const scriptPath = unpackedPath(path.join(__dirname, 'win-bridge.ps1'));
   if (!fs.existsSync(scriptPath)) return;
 
@@ -310,6 +321,7 @@ try {
 } catch (_e) {}
 
 function startNotificationsWorker() {
+  if (process.platform !== 'win32') return;
   const workerScript = unpackedPath(path.join(__dirname, 'notif-worker.cjs'));
   if (!fs.existsSync(workerScript)) return;
 
@@ -858,7 +870,11 @@ function startBackgroundMonitors() {
   }
 
   setInterval(() => {
-    sendBridgeCommand('poll');
+    if (process.platform === 'win32') {
+      sendBridgeCommand('poll');
+    } else {
+      emitCombinedTelemetry();
+    }
   }, 1800);
 
   setInterval(() => {
@@ -940,9 +956,16 @@ app.on('second-instance', () => {
 });
 
 app.whenReady().then(() => {
+  if (process.platform === 'darwin' && app.dock) {
+    try { app.dock.hide(); } catch (_e) {}
+  }
   createWindow();
-  startNativeWindowsBridge();
-  startNotificationsWorker();
+  if (process.platform === 'win32') {
+    startNativeWindowsBridge();
+    startNotificationsWorker();
+  } else {
+    emitCombinedTelemetry();
+  }
   startLowCpuHitTestLoop();
   startDownloadsWatcher();
   startBackgroundMonitors();
@@ -1238,15 +1261,27 @@ ipcMain.handle('launch-app-or-url', async (_event, target) => {
   if (!target) return false;
   try {
     if (target === 'taskmgr') {
-      spawn('taskmgr.exe', [], { detached: true, windowsHide: false, stdio: 'ignore' }).unref();
+      if (process.platform === 'darwin') {
+        spawn('open', ['-a', 'Activity Monitor'], { detached: true, stdio: 'ignore' }).unref();
+      } else {
+        spawn('taskmgr.exe', [], { detached: true, windowsHide: false, stdio: 'ignore' }).unref();
+      }
       return true;
     }
     if (target === 'explorer') {
-      spawn('explorer.exe', [], { detached: true, windowsHide: false, stdio: 'ignore' }).unref();
+      if (process.platform === 'darwin') {
+        spawn('open', ['-a', 'Finder'], { detached: true, stdio: 'ignore' }).unref();
+      } else {
+        spawn('explorer.exe', [], { detached: true, windowsHide: false, stdio: 'ignore' }).unref();
+      }
       return true;
     }
     if (target === 'calc') {
-      spawn('calc.exe', [], { detached: true, windowsHide: false, stdio: 'ignore' }).unref();
+      if (process.platform === 'darwin') {
+        spawn('open', ['-a', 'Calculator'], { detached: true, stdio: 'ignore' }).unref();
+      } else {
+        spawn('calc.exe', [], { detached: true, windowsHide: false, stdio: 'ignore' }).unref();
+      }
       return true;
     }
     await shell.openExternal(target);

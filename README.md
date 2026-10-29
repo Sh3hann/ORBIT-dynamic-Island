@@ -5,14 +5,14 @@
 <h1 align="center">ORBIT</h1>
 
 <p align="center">
-  A Dynamic Island style, always-on-top status bar for Windows.<br/>
+  A Dynamic Island style, always-on-top status bar for Windows & Apple Mac (iMac & MacBook).<br/>
   Music with live lyrics, notifications, Bluetooth, system usage, clipboard shelf and more, in one tiny pill.
 </p>
 
 <p align="center">
   <a href="https://sh3hann.github.io/ORBIT-dynamic-Island/"><img alt="Website: Live" src="https://img.shields.io/badge/website-live-brightgreen.svg" /></a>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-white.svg" /></a>
-  <img alt="Platform: Windows 10/11" src="https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-lightgrey.svg" />
+  <img alt="Platform: Windows & macOS" src="https://img.shields.io/badge/platform-Windows%2010%2F11%20%7C%20macOS-lightgrey.svg" />
 </p>
 
 <p align="center">
@@ -37,12 +37,22 @@
 
 ## Install
 
+### Windows 10 & 11
 1. Download **`ORBIT-Setup-1.0.0.exe`** from the [Releases](https://github.com/Sh3hann/ORBIT-dynamic-Island/releases/latest) page.
 2. Run it and follow the installer. No Node.js, npm or other tools are needed.
-3. ORBIT starts automatically and appears at the top-centre of your screen. Use the tray icon to expand,
-   open the settings or quit.
+3. ORBIT starts automatically and appears at the top-centre of your screen. Use the tray icon to expand, open settings or quit.
 
 > Windows may show a SmartScreen notice because the installer is not code-signed. Choose **More info → Run anyway**.
+
+### Apple macOS (iMac & MacBook)
+1. Download the macOS package from the [Releases](https://github.com/Sh3hann/ORBIT-dynamic-Island/releases/latest) page.
+2. Or run directly from terminal:
+   ```bash
+   git clone https://github.com/Sh3hann/ORBIT-dynamic-Island.git
+   cd ORBIT-dynamic-Island
+   npm install
+   npm start
+   ```
 
 ### Shortcuts
 

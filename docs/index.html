@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>ORBIT — Dynamic Island for Windows</title>
-  <meta name="description" content="Experience Apple's Dynamic Island on Windows 10 & 11. Live hardware telemetry, dual earbud battery gauges, synchronized lyrics, color alerts, and smart clipboard with zero bloat.">
+  <title>ORBIT — Dynamic Island for Windows & Mac</title>
+  <meta name="description" content="Experience Apple's Dynamic Island on Windows 10/11 and Apple macOS (iMac & MacBook). Live hardware telemetry, dual earbud battery gauges, synchronized lyrics, color alerts, and smart clipboard with zero bloat.">
   <meta name="theme-color" content="#070709">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -12,8 +12,8 @@
   
   <!-- OpenGraph / Social -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="ORBIT — Dynamic Island for Windows">
-  <meta property="og:description" content="The iconic Dynamic Island experience reimagined for Windows 10 & 11. Native hardware telemetry, ANC controls, and fluid spring physics.">
+  <meta property="og:title" content="ORBIT — Dynamic Island for Windows & Mac">
+  <meta property="og:description" content="The iconic Dynamic Island experience reimagined for Windows 10/11 and Apple iMac / MacBook. Native hardware telemetry, ANC controls, and fluid spring physics.">
   <meta property="og:image" content="logo.png">
   <meta property="og:url" content="https://sh3hann.github.io/ORBIT-dynamic-Island/">
 
@@ -22,7 +22,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="manifest.json">
 
-  <!-- Inter Font -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -279,7 +279,7 @@
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1.08;
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto 24px;
       background: linear-gradient(180deg, #FFFFFF 20%, rgba(255, 255, 255, 0.72) 100%);
       -webkit-background-clip: text;
@@ -289,7 +289,7 @@
     .hero-sub {
       font-size: clamp(1.05rem, 2vw, 1.25rem);
       color: var(--text-secondary);
-      max-width: 680px;
+      max-width: 720px;
       margin: 0 auto 36px;
       line-height: 1.55;
     }
@@ -297,7 +297,7 @@
     /* Device Detection Notice */
     .device-notice {
       display: none;
-      max-width: 640px;
+      max-width: 660px;
       margin: 0 auto 28px;
       padding: 12px 18px;
       border-radius: var(--radius-md);
@@ -375,6 +375,11 @@
       border-color: var(--glass-border-hover);
       transform: translateY(-2px);
     }
+    .btn-secondary-hero svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
 
     .hero-meta {
       font-size: 0.82rem;
@@ -419,13 +424,6 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
-    .sim-hint kbd {
-      padding: 2px 6px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 4px;
-      font-family: inherit;
-      font-size: 0.7rem;
-    }
 
     /* The Simulated Dynamic Island */
     .island-pill {
@@ -441,7 +439,6 @@
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05);
     }
 
-    /* State 1: Collapsed */
     .island-pill.collapsed {
       width: 290px;
       height: 48px;
@@ -484,7 +481,6 @@
       100% { height: 100%; }
     }
 
-    /* State 2: Expanded */
     .island-pill.expanded {
       width: 440px;
       max-width: 100%;
@@ -541,7 +537,6 @@
       justify-content: space-between;
     }
 
-    /* Sim Media View */
     .sim-media-body {
       display: flex;
       align-items: center;
@@ -603,7 +598,6 @@
       100% { width: 95%; }
     }
 
-    /* Sim Hardware View */
     .sim-hardware-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -644,7 +638,6 @@
       border-radius: 2px;
     }
 
-    /* Sim Bluetooth View */
     .sim-bt-container {
       display: flex;
       align-items: center;
@@ -666,7 +659,6 @@
       margin-top: 4px;
     }
 
-    /* Interactive Island Switcher Controls */
     .sim-bottom-actions {
       display: flex;
       align-items: center;
@@ -932,9 +924,9 @@
       line-height: 1.4;
     }
 
-    /* DOWNLOAD CARDS */
+    /* DUAL DOWNLOAD SECTION (WINDOWS & MAC) */
     .download-section-box {
-      background: linear-gradient(180deg, rgba(18, 18, 24, 0.8) 0%, rgba(10, 10, 14, 0.95) 100%);
+      background: linear-gradient(180deg, rgba(18, 18, 24, 0.85) 0%, rgba(10, 10, 14, 0.98) 100%);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-lg);
       padding: 48px;
@@ -943,138 +935,166 @@
       overflow: hidden;
     }
 
-    .download-grid {
+    .download-dual-grid {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 40px;
-      align-items: center;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 36px;
     }
-    @media (max-width: 860px) {
-      .download-grid {
+    @media (max-width: 900px) {
+      .download-dual-grid {
         grid-template-columns: 1fr;
-        gap: 32px;
+        gap: 28px;
       }
       .download-section-box {
         padding: 32px 20px;
       }
     }
 
-    .download-left h3 {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 12px;
-    }
-    .download-left p {
-      color: var(--text-secondary);
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
-
-    .download-actions-cluster {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 24px;
-    }
-
-    .btn-download-big {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px 28px;
-      background: #FFFFFF;
-      color: #000000;
-      font-size: 1.05rem;
-      font-weight: 800;
-      border-radius: var(--radius-pill);
-      text-decoration: none;
-      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.25);
-      transition: all 0.25s ease;
-    }
-    .btn-download-big:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 36px rgba(255, 255, 255, 0.35);
-    }
-    .btn-download-big svg {
-      width: 20px;
-      height: 20px;
-      fill: currentColor;
-    }
-
-    .btn-repo-big {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 16px 24px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--glass-border);
-      color: #FFF;
-      font-size: 0.95rem;
-      font-weight: 600;
-      border-radius: var(--radius-pill);
-      text-decoration: none;
-      transition: all 0.25s;
-    }
-    .btn-repo-big:hover {
-      background: rgba(255, 255, 255, 0.14);
-      border-color: var(--glass-border-hover);
-      transform: translateY(-2px);
-    }
-
-    .ios-box {
+    .platform-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-md);
-      padding: 24px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
     }
-    .ios-box-title {
+    .platform-card:hover {
+      border-color: var(--glass-border-hover);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .platform-header {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #FFF;
-      margin-bottom: 10px;
+      gap: 14px;
+      margin-bottom: 14px;
     }
-    .ios-box-title svg {
-      width: 18px;
-      height: 18px;
+    .platform-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .platform-icon-box svg {
+      width: 24px;
+      height: 24px;
       fill: #FFF;
     }
-    .ios-box-p {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      line-height: 1.5;
-      margin-bottom: 16px;
+    .platform-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #FFF;
     }
-    .ios-btn-row {
+    .platform-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .platform-desc {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 24px;
+      min-height: 72px;
+    }
+
+    .platform-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
+      margin-bottom: 20px;
     }
-    .btn-ios-sub {
+
+    .btn-download-primary {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 8px 14px;
-      background: rgba(255, 255, 255, 0.06);
+      gap: 10px;
+      padding: 14px 24px;
+      background: #FFFFFF;
+      color: #000000;
+      font-size: 0.95rem;
+      font-weight: 800;
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+      transition: all 0.2s ease;
+    }
+    .btn-download-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(255, 255, 255, 0.3);
+    }
+    .btn-download-primary svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .btn-download-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 20px;
+      background: rgba(255, 255, 255, 0.08);
       border: 1px solid var(--glass-border);
       color: #FFF;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       font-weight: 600;
       border-radius: var(--radius-pill);
       text-decoration: none;
-      cursor: pointer;
       transition: all 0.2s;
     }
-    .btn-ios-sub:hover {
+    .btn-download-secondary:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: var(--glass-border-hover);
+    }
+
+    .terminal-quickstart {
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      color: #93c5fd;
+      overflow-x: auto;
+    }
+    .terminal-quickstart code {
+      white-space: nowrap;
+      user-select: all;
+    }
+    .btn-copy-code {
       background: rgba(255, 255, 255, 0.12);
+      border: none;
+      color: #FFF;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-family: inherit;
+    }
+    .btn-copy-code:hover {
+      background: rgba(255, 255, 255, 0.24);
     }
 
     .checksum-bar {
-      margin-top: 24px;
+      margin-top: 28px;
       padding: 14px 18px;
       background: rgba(0, 0, 0, 0.5);
       border: 1px solid var(--glass-border);
@@ -1220,27 +1240,30 @@
         
         <div class="pill-announcement">
           <span class="indicator"></span>
-          <span>ORBIT v1.0.0 is live for Windows 10 & 11</span>
+          <span>ORBIT v1.0.0 is live for Windows 10/11 & Apple macOS (iMac & MacBook)</span>
         </div>
 
-        <h1 class="hero-title">Dynamic Island.<br>Reimagined for Windows.</h1>
-        <p class="hero-sub">The iconic iOS experience brought to life on Windows with fluid spring physics, live hardware monitors, multi-channel earbud telemetry, synced lyrics, and zero background bloat.</p>
+        <h1 class="hero-title">Dynamic Island.<br>Reimagined for Windows & Mac.</h1>
+        <p class="hero-sub">The iconic Dynamic Island desktop overlay brought to life on Windows 10 & 11 and Apple macOS (iMac & MacBook). Fluid spring physics, live hardware monitors, multi-channel earbud telemetry, synced lyrics, and zero background bloat.</p>
 
-        <!-- Device Detection Banner (auto-detects iOS / Windows) -->
+        <!-- Device Detection Banner (auto-detects Mac / Windows) -->
         <div id="deviceNotice" class="device-notice">
-          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.92-2.85-.9.04-1.99.6-2.63 1.35-.57.65-1.07 1.72-.94 2.74 1 .08 2.03-.49 2.65-1.24z"/></svg>
-          <div>
-            <strong>Browsing on Apple iOS?</strong> You can download the Windows installer directly to your Files / iCloud Drive, test the live Dynamic Island simulator below, or send the link to your PC.
+          <span id="deviceNoticeIcon">
+            <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.92-2.85-.9.04-1.99.6-2.63 1.35-.57.65-1.07 1.72-.94 2.74 1 .08 2.03-.49 2.65-1.24z"/></svg>
+          </span>
+          <div id="deviceNoticeText">
+            <strong>Apple Mac / iMac Detected</strong> — Running macOS? You can download ORBIT for Mac (.dmg / .zip) or launch it directly via Terminal in seconds.
           </div>
         </div>
 
         <div class="hero-cta">
           <a href="https://github.com/Sh3hann/ORBIT-dynamic-Island/releases/download/v1.0.0/ORBIT-Setup-1.0.0.exe" id="mainDownloadBtn" class="btn-download-hero">
-            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            <svg id="mainDownloadIcon" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
             <span id="mainDownloadText">Download for Windows (.exe)</span>
           </a>
-          <a href="https://github.com/Sh3hann/ORBIT-dynamic-Island" target="_blank" rel="noopener noreferrer" class="btn-secondary-hero">
-            <span>Explore Source Code</span>
+          <a href="#download" id="altDownloadBtn" class="btn-secondary-hero">
+            <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.92-2.85-.9.04-1.99.6-2.63 1.35-.57.65-1.07 1.72-.94 2.74 1 .08 2.03-.49 2.65-1.24z"/></svg>
+            <span id="altDownloadText">Download for Mac / iMac</span>
           </a>
         </div>
 
@@ -1249,9 +1272,9 @@
           <span>•</span>
           <span>🪶 <strong>~190 MB</strong> RAM</span>
           <span>•</span>
-          <span>🛡️ 100% Local & Privacy First</span>
+          <span>🍏 <strong>iMac & MacBook Ready</strong></span>
           <span>•</span>
-          <span>📦 96.6 MB Setup</span>
+          <span>🪟 <strong>Windows 10/11 Ready</strong></span>
         </div>
 
         <!-- LIVE INTERACTIVE DYNAMIC ISLAND SIMULATOR -->
@@ -1334,7 +1357,7 @@
                     </div>
                   </div>
                   <div style="text-align:center; font-size:0.75rem; color:var(--text-secondary);">
-                    8-Core Intel Core i7 · 16.0 GB DDR4 · Battery 88% (Discharging)
+                    Apple Silicon M3 / Intel Core · 16 GB Unified Memory · Battery 88%
                   </div>
                 </div>
 
@@ -1378,7 +1401,7 @@
         <div class="section-header">
           <div class="section-tag">Authentic Interface</div>
           <h2 class="section-title">Captured Directly from ORBIT.</h2>
-          <p class="section-sub">No concept renders. Every screenshot below is captured at 2× Retina resolution directly from our running Windows 11 desktop installation.</p>
+          <p class="section-sub">No concept renders. Every screenshot below is captured at 2× Retina resolution directly from our running desktop installation.</p>
         </div>
 
         <div class="gallery-container">
@@ -1418,7 +1441,7 @@
                 </li>
                 <li class="feature-point">
                   <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                  <span>Instant Disk I/O & Network throughput monitoring via Windows Management Instrumentation</span>
+                  <span>Instant Disk I/O & Network throughput monitoring via native system APIs</span>
                 </li>
               </ul>
             </div>
@@ -1434,7 +1457,7 @@
         <div class="section-header">
           <div class="section-tag">Crafted with Precision</div>
           <h2 class="section-title">Built for Performance. Designed to Disappear.</h2>
-          <p class="section-sub">Every detail in ORBIT is tuned for speed, unobtrusive elegance, and deep native Windows integration.</p>
+          <p class="section-sub">Every detail in ORBIT is tuned for speed, unobtrusive elegance, and deep native operating system integration on Windows and Mac.</p>
         </div>
 
         <div class="grid-features">
@@ -1444,7 +1467,7 @@
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
             </div>
             <h3 class="feature-card-title">Color-Coded Dynamic Alerts</h3>
-            <p class="feature-card-desc">The Dynamic Island automatically pulses in the app's brand accent: vibrant emerald green for WhatsApp messages, royal blue for Windows alerts, and warm amber for system notifications.</p>
+            <p class="feature-card-desc">The Dynamic Island automatically pulses in the app's brand accent: vibrant emerald green for WhatsApp messages, royal blue for system alerts, and warm amber for notifications.</p>
           </div>
 
           <div class="feature-card">
@@ -1452,7 +1475,7 @@
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
             </div>
             <h3 class="feature-card-title">Synchronized Lyrics & Aura</h3>
-            <p class="feature-card-desc">Tracks Spotify, Apple Music, and Windows Media Player in real-time. Features album color aura extraction that dynamically transitions between tracks, plus millisecond-accurate synchronized lyrics.</p>
+            <p class="feature-card-desc">Tracks Spotify, Apple Music, and media players in real-time. Features album color aura extraction that dynamically transitions between tracks, plus millisecond-accurate synchronized lyrics.</p>
           </div>
 
           <div class="feature-card">
@@ -1475,8 +1498,8 @@
             <div class="feature-card-icon" style="color:#FFF">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
             </div>
-            <h3 class="feature-card-title">Native Windows Auto-Start</h3>
-            <p class="feature-card-desc">Toggle "Start ORBIT with Windows" directly from the built-in Settings tab. Uses Windows CurrentVersion Run registry — no scheduled tasks, no UAC prompts, and no background services.</p>
+            <h3 class="feature-card-title">Native Windows & Mac Auto-Start</h3>
+            <p class="feature-card-desc">Toggle "Start ORBIT with System" directly from the built-in Settings tab. Uses native OS startup registration — no scheduled tasks, no UAC prompts, and no background daemon bloat.</p>
           </div>
 
           <div class="feature-card">
@@ -1497,7 +1520,7 @@
         <div class="section-header">
           <div class="section-tag">Tested & Verified</div>
           <h2 class="section-title">Built Lean. Truly Lightweight.</h2>
-          <p class="section-sub">Measured on a real Windows 11 machine running 1080p and 4K displays alongside Chrome and Spotify.</p>
+          <p class="section-sub">Optimized for both Windows and Apple macOS desktop environments with minimal resource consumption.</p>
         </div>
 
         <div class="benchmarks-grid">
@@ -1510,79 +1533,119 @@
           <div class="benchmark-card">
             <div class="benchmark-num blue">190 MB</div>
             <div class="benchmark-label">Active Memory Footprint</div>
-            <div class="benchmark-desc">Includes the isolated rendering sandbox, native Windows API bindings, and lyric parser combined.</div>
+            <div class="benchmark-desc">Includes the isolated rendering sandbox, native operating system bindings, and lyric parser combined.</div>
           </div>
 
           <div class="benchmark-card">
             <div class="benchmark-num purple">60 FPS</div>
-            <div class="benchmark-label">DirectX Hardware Acceleration</div>
+            <div class="benchmark-label">GPU Hardware Acceleration</div>
             <div class="benchmark-desc">Silky smooth spring physics powered by Chromium's hardware compositor with zero frame drops.</div>
           </div>
 
           <div class="benchmark-card">
-            <div class="benchmark-num" style="color:#FFF;">96.6 MB</div>
-            <div class="benchmark-label">Single Offline Setup</div>
-            <div class="benchmark-desc">Self-contained NSIS installer. No extra runtimes, no Python, no Node.js required on the target PC.</div>
+            <div class="benchmark-num" style="color:#FFF;">Universal</div>
+            <div class="benchmark-label">Cross-Platform Ready</div>
+            <div class="benchmark-desc">Built for Windows 10/11 (64-bit) and Apple macOS (Apple Silicon M1-M4 & Intel iMac / MacBook).</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- DOWNLOAD SECTION -->
+    <!-- DOWNLOAD SECTION (WINDOWS & MAC) -->
     <section id="download">
       <div class="container">
         <div class="download-section-box">
-          <div class="download-grid">
+          
+          <div style="text-align:center; max-width:680px; margin:0 auto 20px;">
+            <div class="section-tag">Direct Downloads</div>
+            <h2 style="font-size:2.2rem; font-weight:800; letter-spacing:-0.02em; margin-bottom:10px;">Choose Your Platform</h2>
+            <p style="color:var(--text-secondary); font-size:0.95rem;">ORBIT runs natively on Windows 10 & 11 and Apple macOS. 100% free and open-source.</p>
+          </div>
+
+          <div class="download-dual-grid">
             
-            <div class="download-left">
-              <h3>Get ORBIT for Windows</h3>
-              <p>Experience the most refined Dynamic Island overlay on your PC today. Free, open-source, and installs in under 10 seconds.</p>
-              
-              <div class="download-actions-cluster">
-                <a href="https://github.com/Sh3hann/ORBIT-dynamic-Island/releases/download/v1.0.0/ORBIT-Setup-1.0.0.exe" class="btn-download-big">
-                  <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                  <span>Download Installer (v1.0.0)</span>
-                </a>
-                <a href="https://github.com/Sh3hann/ORBIT-dynamic-Island/releases/tag/v1.0.0" target="_blank" rel="noopener noreferrer" class="btn-repo-big">
-                  <span>View Release Notes</span>
-                </a>
+            <!-- WINDOWS CARD -->
+            <div class="platform-card">
+              <div>
+                <div class="platform-header">
+                  <div class="platform-icon-box" style="background:rgba(10,132,255,0.15); border:1px solid rgba(10,132,255,0.3);">
+                    <!-- Windows Logo -->
+                    <svg viewBox="0 0 24 24"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+                  </div>
+                  <div>
+                    <div class="platform-title">Windows 10 & 11</div>
+                    <div class="platform-subtitle">64-bit (x64 & ARM64)</div>
+                  </div>
+                </div>
+
+                <p class="platform-desc">
+                  Self-contained Windows setup installer with built-in auto-start toggle, tray icon integration, and direct WMI hardware telemetry.
+                </p>
               </div>
 
-              <div style="font-size:0.85rem; color:var(--text-muted); line-height:1.6;">
-                <strong>System Requirements:</strong> Windows 10 (Build 1903+) or Windows 11 (64-bit). Compatible with Intel, AMD, and Qualcomm Snapdragon (via x64 emulation).
+              <div>
+                <div class="platform-actions">
+                  <a href="https://github.com/Sh3hann/ORBIT-dynamic-Island/releases/download/v1.0.0/ORBIT-Setup-1.0.0.exe" class="btn-download-primary">
+                    <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    <span>Download Installer (.exe)</span>
+                  </a>
+                  <a href="https://github.com/Sh3hann/ORBIT-dynamic-Island/releases/tag/v1.0.0" target="_blank" rel="noopener noreferrer" class="btn-download-secondary">
+                    <span>Release v1.0.0</span>
+                  </a>
+                </div>
+
+                <div style="font-size:0.78rem; color:var(--text-muted); line-height:1.5;">
+                  <strong>Size:</strong> 96.6 MB · <strong>Requirements:</strong> Windows 10 (1903+) or Windows 11
+                </div>
               </div>
             </div>
 
-            <div class="download-right">
-              <!-- iOS & Cross-Device Card -->
-              <div class="ios-box">
-                <div class="ios-box-title">
-                  <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.92-2.85-.9.04-1.99.6-2.63 1.35-.57.65-1.07 1.72-.94 2.74 1 .08 2.03-.49 2.65-1.24z"/></svg>
-                  <span>Visiting on iPhone or iPad?</span>
+            <!-- MAC CARD (iMac & MacBook) -->
+            <div class="platform-card">
+              <div>
+                <div class="platform-header">
+                  <div class="platform-icon-box" style="background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25);">
+                    <!-- Apple Logo -->
+                    <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.92-2.85-.9.04-1.99.6-2.63 1.35-.57.65-1.07 1.72-.94 2.74 1 .08 2.03-.49 2.65-1.24z"/></svg>
+                  </div>
+                  <div>
+                    <div class="platform-title">Apple macOS</div>
+                    <div class="platform-subtitle">iMac & MacBook (Apple Silicon & Intel)</div>
+                  </div>
                 </div>
-                <p class="ios-box-p">
-                  You can download the Windows installer (.exe) directly to your iOS <strong>Files / iCloud Drive</strong> to transfer to your PC later, share via AirDrop, or install this webpage as a standalone PWA.
+
+                <p class="platform-desc">
+                  Native macOS floating Dynamic Island for iMac, MacBook Pro/Air, and Mac mini. Runs seamlessly across all Spaces and full-screen apps.
                 </p>
-                <div class="ios-btn-row">
-                  <a href="https://github.com/Sh3hann/ORBIT-dynamic-Island/releases/download/v1.0.0/ORBIT-Setup-1.0.0.exe" class="btn-ios-sub">
-                    <span>Download .exe to Files</span>
-                  </a>
-                  <button class="btn-ios-sub" onclick="shareWebsite()">
-                    <span>Share / Send to PC</span>
-                  </button>
-                  <button class="btn-ios-sub" onclick="copyRepoLink()">
-                    <span>Copy Link</span>
-                  </button>
-                </div>
               </div>
 
+              <div>
+                <div class="platform-actions">
+                  <a href="https://github.com/Sh3hann/ORBIT-dynamic-Island/releases" target="_blank" rel="noopener noreferrer" class="btn-download-primary">
+                    <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    <span>Download for Mac (.dmg)</span>
+                  </a>
+                  <a href="https://github.com/Sh3hann/ORBIT-dynamic-Island/releases" target="_blank" rel="noopener noreferrer" class="btn-download-secondary">
+                    <span>Mac .zip</span>
+                  </a>
+                </div>
+
+                <div class="terminal-quickstart">
+                  <code>git clone https://github.com/Sh3hann/ORBIT-dynamic-Island.git && cd ORBIT-dynamic-Island && npm i && npm start</code>
+                  <button class="btn-copy-code" onclick="copyTerminalCmd()">Copy</button>
+                </div>
+                
+                <div style="font-size:0.78rem; color:var(--text-muted); line-height:1.5; margin-top:8px;">
+                  <strong>Requirements:</strong> macOS 11 Big Sur, Monterey, Ventura, Sonoma, Sequoia
+                </div>
+              </div>
             </div>
 
           </div>
 
           <!-- Checksum Verification Box -->
           <div class="checksum-bar">
-            <span style="font-weight:600; color:#FFF;">SHA-256:</span>
+            <span style="font-weight:600; color:#FFF;">SHA-256 Checksum (Windows Setup):</span>
             <span id="shaHash" style="user-select:all;">4638422AF7E4E43648BDC0259F270069539CAC2F473E788E9E0F5D7DB32D071B</span>
             <button class="btn-copy-hash" onclick="copyHash()">Copy</button>
           </div>
@@ -1610,13 +1673,13 @@
       </div>
 
       <div class="legal-notice">
-        Disclaimer: Windows is a trademark of Microsoft Corporation. Dynamic Island and iOS are trademarks of Apple Inc. ORBIT is an independent open-source desktop overlay project and is not affiliated with, sponsored by, or endorsed by Apple Inc. or Microsoft Corporation.
+        Disclaimer: Windows is a trademark of Microsoft Corporation. Dynamic Island, macOS, iMac, and MacBook are trademarks of Apple Inc. ORBIT is an independent open-source desktop overlay project and is not affiliated with, sponsored by, or endorsed by Apple Inc. or Microsoft Corporation.
       </div>
     </div>
   </footer>
 
   <!-- TOAST NOTIFICATION -->
-  <div id="toast" class="toast">Link copied to clipboard!</div>
+  <div id="toast" class="toast">Copied to clipboard!</div>
 
   <!-- INTERACTIVE LOGIC -->
   <script>
@@ -1630,7 +1693,7 @@
         points: [
           'Individual multi-core CPU bar graphs refreshed every 1.5s with negligible overhead',
           'Real-time RAM gauge with GB breakdown (used vs total)',
-          'Instant Disk I/O & Network throughput monitoring via Windows Management Instrumentation'
+          'Instant Disk I/O & Network throughput monitoring via native system APIs'
         ]
       },
       bluetooth: {
@@ -1647,7 +1710,7 @@
       alerts: {
         img: 'assets/shots/alerts.png',
         cat: 'Notification Center',
-        title: 'WhatsApp & Windows Alerts',
+        title: 'WhatsApp & System Alerts',
         desc: 'Dynamic Island smoothly expands and flashes in the app’s brand color when new messages arrive. Instant previews with badge counts for unread notifications.',
         points: [
           'Dynamic emerald green accent for incoming WhatsApp conversations',
@@ -1670,9 +1733,9 @@
         img: 'assets/shots/apps.png',
         cat: 'Quick Launcher',
         title: 'Instant Apps & Google Search',
-        desc: 'Launch your most-used Windows apps with a single tap, or type directly into the island to perform instant Google searches.',
+        desc: 'Launch your most-used apps with a single tap, or type directly into the island to perform instant Google searches.',
         points: [
-          'One-click launch icons for Browser, Terminal, Explorer, Notepad, and Settings',
+          'One-click launch icons for Browser, Terminal, Explorer/Finder, Notes, and Settings',
           'Integrated instant Google search input right inside the island',
           'Keyboard shortcut activation for lightning-fast application switching'
         ]
@@ -1681,7 +1744,7 @@
         img: 'assets/shots/hud.png',
         cat: 'System Controls',
         title: 'Volume, Brightness & Power HUD',
-        desc: 'Control Windows master volume, display brightness, and sleep/restart states without reaching for the Windows taskbar or hardware keys.',
+        desc: 'Control master audio volume, display brightness, and sleep/restart states without reaching for the taskbar or hardware keys.',
         points: [
           'Smooth slider controls for master audio volume with live percentage feedback',
           'Display brightness level adjustment with instant feedback',
@@ -1702,10 +1765,10 @@
       settings: {
         img: 'assets/shots/settings.png',
         cat: 'Configuration',
-        title: 'Native Windows Auto-Start & Pins',
-        desc: 'Customize ORBIT to fit your exact workflow. Pin your favorite tabs to the navigation bar and enable automatic startup with Windows.',
+        title: 'Native Auto-Start & Pins',
+        desc: 'Customize ORBIT to fit your exact workflow. Pin your favorite tabs to the navigation bar and enable automatic startup with your computer.',
         points: [
-          'Native "Start ORBIT with Windows" toggle using clean CurrentVersion/Run registry',
+          'Native "Start ORBIT with System" toggle using clean OS registry & login item APIs',
           'Custom tab pins: choose which pages appear in the primary navigation pill',
           'Zero admin prompt (UAC) required for auto-start setup'
         ]
@@ -1789,17 +1852,35 @@
       if (activeBtn) activeBtn.classList.add('active');
     }
 
-    // iOS Detection & Dynamic Platform Behavior
+    // Platform Detection (Mac / iMac vs Windows)
     function detectPlatform() {
       const ua = navigator.userAgent || navigator.vendor || window.opera;
-      const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      const isMac = /Macintosh|Mac OS X/i.test(ua) && !/iPhone|iPad|iPod/i.test(ua);
       
       const deviceNotice = document.getElementById('deviceNotice');
+      const deviceNoticeText = document.getElementById('deviceNoticeText');
+      const mainDownloadBtn = document.getElementById('mainDownloadBtn');
       const mainDownloadText = document.getElementById('mainDownloadText');
+      const mainDownloadIcon = document.getElementById('mainDownloadIcon');
+      const altDownloadBtn = document.getElementById('altDownloadBtn');
+      const altDownloadText = document.getElementById('altDownloadText');
 
-      if (isIOS) {
-        if (deviceNotice) deviceNotice.classList.add('show');
-        if (mainDownloadText) mainDownloadText.textContent = 'Download .exe to Files (96.6 MB)';
+      if (isMac) {
+        if (deviceNotice) {
+          deviceNotice.classList.add('show');
+          deviceNoticeText.innerHTML = '<strong>Apple Mac / iMac Detected</strong> — Running macOS? You can download ORBIT for Mac (.dmg / .zip) or launch it directly via Terminal in seconds.';
+        }
+        if (mainDownloadBtn) {
+          mainDownloadBtn.href = '#download';
+        }
+        if (mainDownloadText) mainDownloadText.textContent = 'Download for Mac / iMac (.dmg)';
+        if (mainDownloadIcon) {
+          mainDownloadIcon.innerHTML = '<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.92-2.85-.9.04-1.99.6-2.63 1.35-.57.65-1.07 1.72-.94 2.74 1 .08 2.03-.49 2.65-1.24z"/>';
+        }
+        if (altDownloadBtn) {
+          altDownloadBtn.href = 'https://github.com/Sh3hann/ORBIT-dynamic-Island/releases/download/v1.0.0/ORBIT-Setup-1.0.0.exe';
+        }
+        if (altDownloadText) altDownloadText.textContent = 'Download for Windows (.exe)';
       }
     }
     detectPlatform();
@@ -1823,24 +1904,21 @@
       });
     }
 
+    function copyTerminalCmd() {
+      const cmd = 'git clone https://github.com/Sh3hann/ORBIT-dynamic-Island.git && cd ORBIT-dynamic-Island && npm install && npm start';
+      navigator.clipboard.writeText(cmd).then(() => {
+        showToast('Terminal command copied!');
+      }).catch(() => {
+        showToast('Failed to copy');
+      });
+    }
+
     function copyRepoLink() {
       navigator.clipboard.writeText(window.location.href).then(() => {
         showToast('Page link copied to clipboard!');
       }).catch(() => {
         showToast('Failed to copy link');
       });
-    }
-
-    function shareWebsite() {
-      if (navigator.share) {
-        navigator.share({
-          title: 'ORBIT — Dynamic Island for Windows',
-          text: 'Check out ORBIT, the Dynamic Island desktop overlay for Windows 10 & 11!',
-          url: window.location.href
-        }).catch(() => {});
-      } else {
-        copyRepoLink();
-      }
     }
   </script>
 </body>
