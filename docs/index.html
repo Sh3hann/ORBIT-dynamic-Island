@@ -25,27 +25,28 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #070709;
-      --bg-card: rgba(18, 18, 22, 0.72);
-      --bg-card-hover: rgba(26, 26, 32, 0.85);
+      --bg: #050508;
+      --bg-card: rgba(16, 16, 22, 0.65);
+      --bg-card-hover: rgba(24, 24, 32, 0.85);
       --glass-border: rgba(255, 255, 255, 0.08);
-      --glass-border-hover: rgba(255, 255, 255, 0.18);
+      --glass-border-hover: rgba(255, 255, 255, 0.22);
       --text: #F5F5F7;
-      --text-secondary: rgba(245, 245, 247, 0.65);
+      --text-secondary: rgba(245, 245, 247, 0.68);
       --text-muted: rgba(245, 245, 247, 0.42);
       --accent-blue: #0A84FF;
       --accent-cyan: #30D158;
       --accent-purple: #BF5AF2;
       --accent-amber: #FF9F0A;
-      --glow-gradient: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.08) 35%, transparent 70%);
       --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-lg: 26px;
       --radius-pill: 9999px;
+      --mouse-x: 50%;
+      --mouse-y: 20%;
     }
 
     * {
@@ -68,50 +69,60 @@
       overflow-x: hidden;
       background: var(--bg);
       position: relative;
+      /* Subtle technical grid matrix */
+      background-image: 
+        radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(99, 102, 241, 0.12) 0%, transparent 45%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 48px 48px, 48px 48px;
     }
 
-    /* Ambient background lights */
-    .ambient-glow {
+    /* Ambient background glowing orbs */
+    .ambient-canvas {
       position: fixed;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100vw;
-      max-width: 1400px;
-      height: 700px;
-      background: var(--glow-gradient);
+      inset: 0;
       pointer-events: none;
       z-index: 0;
+      overflow: hidden;
     }
 
     .ambient-orb {
       position: absolute;
       border-radius: 50%;
-      filter: blur(120px);
+      filter: blur(140px);
       pointer-events: none;
-      z-index: 0;
-      opacity: 0.25;
-      animation: floatOrb 16s ease-in-out infinite alternate;
+      opacity: 0.28;
+      animation: floatOrb 18s ease-in-out infinite alternate;
     }
     .orb-1 {
-      top: 15%;
-      left: 10%;
-      width: 420px;
-      height: 420px;
-      background: #3b82f6;
+      top: 5%;
+      left: 15%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, #3b82f6 0%, #6366f1 70%);
     }
     .orb-2 {
-      top: 30%;
-      right: 10%;
+      top: 25%;
+      right: 12%;
+      width: 560px;
+      height: 560px;
+      background: radial-gradient(circle, #8b5cf6 0%, #d946ef 70%);
+      animation-delay: -7s;
+      animation-duration: 22s;
+    }
+    .orb-3 {
+      top: 65%;
+      left: 20%;
       width: 480px;
       height: 480px;
-      background: #8b5cf6;
-      animation-delay: -6s;
+      background: radial-gradient(circle, #06b6d4 0%, #3b82f6 70%);
+      animation-delay: -12s;
     }
 
     @keyframes floatOrb {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(40px, 30px) scale(1.1); }
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      50% { transform: translate(60px, 40px) scale(1.12) rotate(45deg); }
+      100% { transform: translate(-30px, 60px) scale(0.95) rotate(90deg); }
     }
 
     /* Layout Container */
@@ -129,18 +140,18 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      background: rgba(7, 7, 9, 0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      background: rgba(5, 5, 8, 0.75);
       border-bottom: 1px solid var(--glass-border);
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .nav-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 68px;
+      height: 70px;
     }
 
     .brand {
@@ -149,46 +160,52 @@
       gap: 12px;
       text-decoration: none;
       color: var(--text);
+      transition: transform 0.2s ease;
+    }
+    .brand:hover {
+      transform: scale(1.02);
     }
     .brand img {
-      width: 34px;
-      height: 34px;
-      border-radius: 9px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
     .brand-name {
       font-weight: 800;
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       letter-spacing: 0.04em;
-      background: linear-gradient(135deg, #FFF 40%, rgba(255, 255, 255, 0.7) 100%);
+      background: linear-gradient(135deg, #FFFFFF 40%, rgba(255, 255, 255, 0.7) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     .badge-version {
       font-size: 0.72rem;
-      font-weight: 600;
-      padding: 3px 8px;
+      font-weight: 700;
+      padding: 3px 9px;
       border-radius: var(--radius-pill);
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid var(--glass-border);
-      color: rgba(255, 255, 255, 0.8);
-      letter-spacing: 0.02em;
+      color: rgba(255, 255, 255, 0.85);
+      letter-spacing: 0.04em;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 30px;
     }
     .nav-link {
       text-decoration: none;
       color: var(--text-secondary);
       font-size: 0.92rem;
       font-weight: 500;
-      transition: color 0.2s;
+      transition: color 0.2s, transform 0.2s;
     }
     .nav-link:hover {
       color: #FFF;
+      transform: translateY(-1px);
     }
 
     .nav-actions {
@@ -200,7 +217,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 14px;
+      padding: 9px 16px;
       border-radius: var(--radius-pill);
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--glass-border);
@@ -208,10 +225,10 @@
       font-size: 0.88rem;
       font-weight: 600;
       text-decoration: none;
-      transition: all 0.2s;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .btn-github:hover {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.14);
       border-color: var(--glass-border-hover);
       transform: translateY(-1px);
     }
@@ -225,41 +242,67 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 9px 18px;
+      padding: 9px 20px;
       border-radius: var(--radius-pill);
       background: #FFFFFF;
       color: #000000;
       font-size: 0.88rem;
       font-weight: 700;
       text-decoration: none;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.18);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
     }
     .btn-primary-nav:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.28);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(255, 255, 255, 0.35);
     }
 
     /* Hero Section */
     .hero {
-      padding: 72px 0 60px;
+      padding: 85px 0 70px;
       text-align: center;
       position: relative;
     }
 
+    /* PUNCHY ANIMATED SHIMMER ANNOUNCEMENT PILL */
     .pill-announcement {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 16px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--glass-border);
+      gap: 10px;
+      padding: 8px 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: var(--radius-pill);
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      margin-bottom: 28px;
-      backdrop-filter: blur(10px);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 32px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      position: relative;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+    .pill-announcement::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+      animation: pillSweep 4s infinite ease-in-out;
+    }
+    @keyframes pillSweep {
+      0% { left: -100%; }
+      30%, 100% { left: 100%; }
+    }
+    .pill-announcement:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 12px 32px rgba(99, 102, 241, 0.25);
     }
     .pill-announcement .indicator {
       width: 8px;
@@ -267,57 +310,83 @@
       border-radius: 50%;
       background: var(--accent-cyan);
       box-shadow: 0 0 10px var(--accent-cyan);
-      animation: pulseGreen 2s infinite;
+      animation: pulseGreen 1.8s infinite;
+      flex-shrink: 0;
     }
     @keyframes pulseGreen {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
+      50% { opacity: 0.35; transform: scale(0.8); }
+    }
+    .pill-arrow {
+      color: var(--accent-blue);
+      font-weight: 800;
+      transition: transform 0.2s ease;
+    }
+    .pill-announcement:hover .pill-arrow {
+      transform: translateX(3px);
     }
 
     .hero-title {
-      font-size: clamp(2.5rem, 6vw, 4.2rem);
+      font-size: clamp(2.6rem, 6.5vw, 4.5rem);
       font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.08;
-      max-width: 960px;
+      letter-spacing: -0.035em;
+      line-height: 1.06;
+      max-width: 980px;
       margin: 0 auto 24px;
-      background: linear-gradient(180deg, #FFFFFF 20%, rgba(255, 255, 255, 0.72) 100%);
+    }
+
+    /* ANIMATED GRADIENT TEXT SHIMMER */
+    .gradient-text-shimmer {
+      background: linear-gradient(90deg, #FFFFFF 0%, #A5B4FC 25%, #E0E7FF 50%, #C084FC 75%, #FFFFFF 100%);
+      background-size: 200% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      animation: textShimmer 7s linear infinite;
+      display: inline-block;
+    }
+    @keyframes textShimmer {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
     }
 
     .hero-sub {
       font-size: clamp(1.05rem, 2vw, 1.25rem);
       color: var(--text-secondary);
-      max-width: 720px;
-      margin: 0 auto 36px;
-      line-height: 1.55;
+      max-width: 740px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
     }
 
     /* Device Detection Notice */
     .device-notice {
       display: none;
       max-width: 660px;
-      margin: 0 auto 28px;
-      padding: 12px 18px;
+      margin: 0 auto 30px;
+      padding: 14px 20px;
       border-radius: var(--radius-md);
-      background: rgba(10, 132, 255, 0.1);
-      border: 1px solid rgba(10, 132, 255, 0.25);
-      font-size: 0.88rem;
+      background: rgba(10, 132, 255, 0.12);
+      border: 1px solid rgba(10, 132, 255, 0.3);
+      font-size: 0.9rem;
       color: #93c5fd;
-      line-height: 1.4;
-      backdrop-filter: blur(10px);
+      line-height: 1.45;
+      backdrop-filter: blur(14px);
       text-align: left;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      animation: fadeInNotice 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes fadeInNotice {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     .device-notice.show {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
     .device-notice svg {
       flex-shrink: 0;
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       fill: currentColor;
     }
 
@@ -327,31 +396,50 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 16px;
-      margin-bottom: 24px;
+      gap: 18px;
+      margin-bottom: 28px;
     }
 
     .btn-download-hero {
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      padding: 16px 32px;
+      padding: 17px 36px;
       background: #FFFFFF;
       color: #000000;
       font-size: 1.05rem;
-      font-weight: 700;
+      font-weight: 800;
       border-radius: var(--radius-pill);
       text-decoration: none;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.22);
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 10px 32px rgba(255, 255, 255, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-download-hero::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transform: rotate(25deg);
+      transition: all 0.6s ease;
+    }
+    .btn-download-hero:hover::after {
+      left: 130%;
     }
     .btn-download-hero:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 36px rgba(255, 255, 255, 0.32);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 16px 42px rgba(255, 255, 255, 0.35);
+    }
+    .btn-download-hero:active {
+      transform: translateY(-1px) scale(0.98);
     }
     .btn-download-hero svg {
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       fill: currentColor;
     }
 
@@ -359,7 +447,7 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 16px 28px;
+      padding: 17px 30px;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--glass-border);
       color: #FFFFFF;
@@ -367,8 +455,8 @@
       font-weight: 600;
       border-radius: var(--radius-pill);
       text-decoration: none;
-      backdrop-filter: blur(10px);
-      transition: all 0.25s ease;
+      backdrop-filter: blur(14px);
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .btn-secondary-hero:hover {
       background: rgba(255, 255, 255, 0.12);
@@ -382,13 +470,13 @@
     }
 
     .hero-meta {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 18px;
     }
     .hero-meta span {
       display: inline-flex;
@@ -396,21 +484,27 @@
       gap: 6px;
     }
 
-    /* Live Interactive Dynamic Island Simulator */
+    /* LIVE DYNAMIC ISLAND SIMULATOR WITH AMBIENT BACKLIGHT AURA */
     .interactive-island-section {
-      margin: 48px auto 20px;
+      margin: 54px auto 20px;
       max-width: 680px;
       position: relative;
     }
 
     .interactive-island-wrapper {
-      background: rgba(14, 14, 18, 0.6);
+      background: rgba(14, 14, 20, 0.65);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-lg);
-      padding: 32px 24px 24px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      padding: 34px 24px 26px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
       position: relative;
       overflow: hidden;
+      perspective: 1000px;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s;
+    }
+    .interactive-island-wrapper:hover {
+      border-color: var(--glass-border-hover);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.75), 0 0 40px rgba(99, 102, 241, 0.15);
     }
 
     .sim-hint {
@@ -420,71 +514,103 @@
       gap: 8px;
       font-size: 0.78rem;
       color: var(--text-muted);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
+      font-weight: 600;
     }
 
-    /* The Simulated Dynamic Island */
+    /* The Simulated Dynamic Island with Spring Physics */
+    .island-container {
+      position: relative;
+      display: inline-block;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .island-aura {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      height: 80%;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, rgba(59, 130, 246, 0.2) 50%, transparent 80%);
+      filter: blur(32px);
+      border-radius: 60px;
+      opacity: 0.7;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      z-index: 0;
+    }
+
     .island-pill {
       background: #000000;
       border-radius: 36px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       margin: 0 auto;
-      transition: all 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+      transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                  height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                  border-radius 0.4s ease, 
+                  border-color 0.3s, 
+                  box-shadow 0.3s;
       cursor: pointer;
       user-select: none;
       position: relative;
+      z-index: 1;
       overflow: hidden;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.06);
     }
 
     .island-pill.collapsed {
-      width: 290px;
+      width: 300px;
       height: 48px;
-      padding: 0 16px;
+      padding: 0 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     .island-pill.collapsed:hover {
-      transform: scale(1.02);
-      border-color: rgba(255, 255, 255, 0.3);
+      transform: scale(1.025);
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 18px 56px rgba(0, 0, 0, 0.95), 0 0 20px rgba(255, 255, 255, 0.15);
     }
 
     .pill-left, .pill-right {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-size: 0.82rem;
       font-weight: 600;
     }
     .pill-wave {
       display: flex;
       align-items: center;
-      gap: 2px;
-      height: 14px;
+      gap: 3px;
+      height: 16px;
     }
     .pill-wave span {
       width: 3px;
       height: 100%;
       background: var(--accent-cyan);
-      border-radius: 2px;
-      animation: waveBar 1.2s ease-in-out infinite alternate;
+      border-radius: 3px;
+      animation: waveSpring 1.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
     }
-    .pill-wave span:nth-child(2) { animation-delay: 0.2s; height: 60%; }
-    .pill-wave span:nth-child(3) { animation-delay: 0.4s; height: 80%; }
-    .pill-wave span:nth-child(4) { animation-delay: 0.1s; height: 40%; }
-    @keyframes waveBar {
-      0% { height: 25%; }
-      100% { height: 100%; }
+    .pill-wave span:nth-child(1) { height: 40%; animation-delay: 0.0s; }
+    .pill-wave span:nth-child(2) { height: 90%; animation-delay: 0.25s; }
+    .pill-wave span:nth-child(3) { height: 60%; animation-delay: 0.45s; }
+    .pill-wave span:nth-child(4) { height: 100%; animation-delay: 0.15s; }
+    .pill-wave span:nth-child(5) { height: 35%; animation-delay: 0.35s; }
+    @keyframes waveSpring {
+      0% { height: 20%; transform: scaleY(0.4); }
+      100% { height: 100%; transform: scaleY(1.0); }
     }
 
     .island-pill.expanded {
-      width: 440px;
+      width: 450px;
       max-width: 100%;
-      height: 220px;
+      height: 226px;
       padding: 18px 20px;
       display: flex;
       flex-direction: column;
@@ -496,6 +622,11 @@
       flex-direction: column;
       height: 100%;
       justify-content: space-between;
+      animation: fadeInContent 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes fadeInContent {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
     }
     .island-pill.expanded .island-collapsed-content {
       display: none;
@@ -515,16 +646,17 @@
       background: transparent;
       border: none;
       color: var(--text-muted);
-      font-size: 0.76rem;
+      font-size: 0.78rem;
       font-weight: 600;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: var(--radius-pill);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .sim-tab-btn.active {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.15);
       color: #FFF;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     }
 
     .sim-view {
@@ -535,6 +667,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      animation: fadeInContent 0.25s ease;
     }
 
     .sim-media-body {
@@ -543,15 +676,20 @@
       gap: 16px;
     }
     .sim-album-art {
-      width: 58px;
-      height: 58px;
+      width: 60px;
+      height: 60px;
       border-radius: 12px;
       background: linear-gradient(135deg, #FF2D55, #AF52DE);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 16px rgba(255, 45, 85, 0.4);
+      box-shadow: 0 6px 20px rgba(255, 45, 85, 0.4);
       flex-shrink: 0;
+      animation: pulseAlbum 4s infinite alternate;
+    }
+    @keyframes pulseAlbum {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.03); }
     }
     .sim-song-meta {
       text-align: left;
@@ -559,7 +697,7 @@
       overflow: hidden;
     }
     .sim-song-title {
-      font-size: 0.95rem;
+      font-size: 0.96rem;
       font-weight: 700;
       white-space: nowrap;
       overflow: hidden;
@@ -602,7 +740,7 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
-      margin: 10px 0;
+      margin: 8px 0;
     }
     .sim-hw-card {
       background: rgba(255, 255, 255, 0.05);
@@ -672,35 +810,39 @@
       background: rgba(10, 132, 255, 0.12);
       border: 1px solid rgba(10, 132, 255, 0.25);
       border-radius: var(--radius-pill);
-      padding: 4px 12px;
+      padding: 4px 14px;
       cursor: pointer;
       font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-sim-toggle:hover {
+      background: rgba(10, 132, 255, 0.22);
     }
 
     /* Section Styles */
     section {
-      padding: 90px 0;
+      padding: 100px 0;
       position: relative;
     }
     .section-header {
       text-align: center;
-      max-width: 720px;
-      margin: 0 auto 56px;
+      max-width: 740px;
+      margin: 0 auto 60px;
     }
     .section-tag {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       color: var(--accent-blue);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
     .section-title {
-      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-size: clamp(2rem, 4vw, 2.85rem);
       font-weight: 800;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
       line-height: 1.15;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
     .section-sub {
       font-size: 1.05rem;
@@ -708,29 +850,31 @@
       line-height: 1.6;
     }
 
-    /* REAL SCREENSHOT SHOWCASE TABS */
+    /* REAL SCREENSHOT SHOWCASE WITH ATMOSPHERE GLOW */
     .gallery-container {
       background: var(--bg-card);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-lg);
-      padding: 32px;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(20px);
+      padding: 36px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(24px);
+      position: relative;
+      overflow: hidden;
     }
 
     .gallery-nav {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
       justify-content: center;
-      margin-bottom: 36px;
+      margin-bottom: 40px;
     }
 
     .gallery-tab {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 18px;
+      padding: 11px 20px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-pill);
@@ -738,24 +882,26 @@
       font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .gallery-tab:hover {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.09);
       color: #FFF;
       border-color: var(--glass-border-hover);
+      transform: translateY(-1px);
     }
     .gallery-tab.active {
       background: #FFFFFF;
       color: #000000;
       border-color: #FFFFFF;
-      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 18px rgba(255, 255, 255, 0.25);
+      transform: scale(1.02);
     }
 
     .gallery-stage {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 40px;
+      gap: 44px;
       align-items: center;
       min-height: 480px;
     }
@@ -763,22 +909,35 @@
     @media (max-width: 900px) {
       .gallery-stage {
         grid-template-columns: 1fr;
-        gap: 28px;
+        gap: 32px;
       }
     }
 
+    /* Studio Display Bezel with Dynamic Color Backlight */
     .stage-preview {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at center, rgba(30, 30, 40, 0.7) 0%, rgba(12, 12, 16, 0.9) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 18px;
-      padding: 36px 20px;
-      min-height: 400px;
+      background: radial-gradient(circle at center, rgba(32, 32, 44, 0.8) 0%, rgba(10, 10, 14, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 38px 24px;
+      min-height: 420px;
       position: relative;
       overflow: hidden;
-      box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
+      box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.85);
+    }
+
+    .stage-ambient-glow {
+      position: absolute;
+      width: 70%;
+      height: 70%;
+      background: rgba(59, 130, 246, 0.3);
+      filter: blur(50px);
+      border-radius: 50%;
+      pointer-events: none;
+      transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 0;
     }
 
     .stage-preview img {
@@ -786,8 +945,10 @@
       height: auto;
       max-height: 380px;
       object-fit: contain;
-      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.8));
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.85));
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      z-index: 1;
     }
 
     .stage-info {
@@ -796,13 +957,13 @@
     .stage-category {
       font-size: 0.78rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--accent-blue);
       margin-bottom: 8px;
     }
     .stage-title {
-      font-size: 1.85rem;
+      font-size: 1.9rem;
       font-weight: 800;
       letter-spacing: -0.02em;
       margin-bottom: 14px;
@@ -812,29 +973,29 @@
       font-size: 0.98rem;
       color: var(--text-secondary);
       line-height: 1.65;
-      margin-bottom: 24px;
+      margin-bottom: 26px;
     }
 
     .feature-points {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
     .feature-point {
       display: flex;
       align-items: flex-start;
       gap: 12px;
-      font-size: 0.88rem;
-      color: rgba(255, 255, 255, 0.85);
-      line-height: 1.45;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.88);
+      line-height: 1.5;
     }
     .feature-point svg {
       width: 18px;
       height: 18px;
       flex-shrink: 0;
       fill: var(--accent-cyan);
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
     /* GRID FEATURES */
@@ -848,43 +1009,49 @@
       background: var(--bg-card);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-md);
-      padding: 30px;
-      transition: all 0.25s ease;
+      padding: 32px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
       overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
     .feature-card:hover {
       background: var(--bg-card-hover);
       border-color: var(--glass-border-hover);
-      transform: translateY(-3px);
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(99, 102, 241, 0.15);
     }
 
     .feature-card-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--glass-border);
+      transition: transform 0.3s ease;
+    }
+    .feature-card:hover .feature-card-icon {
+      transform: scale(1.08) rotate(2deg);
     }
     .feature-card-icon svg {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
     }
 
     .feature-card-title {
-      font-size: 1.2rem;
+      font-size: 1.22rem;
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       color: #FFF;
     }
     .feature-card-desc {
-      font-size: 0.92rem;
+      font-size: 0.94rem;
       color: var(--text-secondary);
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
     /* BENCHMARKS / PERFORMANCE */
@@ -894,43 +1061,50 @@
       gap: 20px;
     }
     .benchmark-card {
-      background: linear-gradient(180deg, rgba(22, 22, 28, 0.7) 0%, rgba(14, 14, 18, 0.9) 100%);
+      background: linear-gradient(180deg, rgba(22, 22, 30, 0.7) 0%, rgba(12, 12, 16, 0.95) 100%);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-md);
-      padding: 28px;
+      padding: 32px 24px;
       text-align: center;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+    .benchmark-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--glass-border-hover);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
     }
     .benchmark-num {
-      font-size: 2.75rem;
+      font-size: 2.85rem;
       font-weight: 800;
       letter-spacing: -0.03em;
       color: #FFF;
       font-family: 'JetBrains Mono', monospace;
       margin-bottom: 8px;
     }
-    .benchmark-num.cyan { color: var(--accent-cyan); }
-    .benchmark-num.blue { color: var(--accent-blue); }
-    .benchmark-num.purple { color: var(--accent-purple); }
+    .benchmark-num.cyan { color: var(--accent-cyan); text-shadow: 0 0 20px rgba(48, 209, 88, 0.4); }
+    .benchmark-num.blue { color: var(--accent-blue); text-shadow: 0 0 20px rgba(10, 132, 255, 0.4); }
+    .benchmark-num.purple { color: var(--accent-purple); text-shadow: 0 0 20px rgba(191, 90, 242, 0.4); }
 
     .benchmark-label {
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: #FFF;
       margin-bottom: 6px;
     }
     .benchmark-desc {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
     /* DUAL DOWNLOAD SECTION (WINDOWS & MAC) */
     .download-section-box {
-      background: linear-gradient(180deg, rgba(18, 18, 24, 0.85) 0%, rgba(10, 10, 14, 0.98) 100%);
+      background: linear-gradient(180deg, rgba(18, 18, 26, 0.85) 0%, rgba(8, 8, 12, 0.98) 100%);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-lg);
-      padding: 48px;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+      padding: 52px;
+      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.7);
       position: relative;
       overflow: hidden;
     }
@@ -955,27 +1129,31 @@
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-md);
-      padding: 32px;
+      padding: 34px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: all 0.25s ease;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
     }
     .platform-card:hover {
       border-color: var(--glass-border-hover);
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
     }
 
     .platform-header {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 14px;
+      gap: 16px;
+      margin-bottom: 16px;
     }
     .platform-icon-box {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
       background: rgba(255, 255, 255, 0.08);
       display: flex;
       align-items: center;
@@ -983,12 +1161,12 @@
       flex-shrink: 0;
     }
     .platform-icon-box svg {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       fill: #FFF;
     }
     .platform-title {
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       font-weight: 800;
       letter-spacing: -0.01em;
       color: #FFF;
@@ -996,13 +1174,13 @@
     .platform-subtitle {
       font-size: 0.78rem;
       color: var(--text-muted);
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
     }
 
     .platform-desc {
-      font-size: 0.92rem;
+      font-size: 0.94rem;
       color: var(--text-secondary);
       line-height: 1.6;
       margin-bottom: 24px;
@@ -1020,19 +1198,19 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 14px 24px;
+      padding: 15px 26px;
       background: #FFFFFF;
       color: #000000;
-      font-size: 0.95rem;
+      font-size: 0.96rem;
       font-weight: 800;
       border-radius: var(--radius-pill);
       text-decoration: none;
-      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
-      transition: all 0.2s ease;
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.22);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .btn-download-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 28px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.35);
     }
     .btn-download-primary svg {
       width: 18px;
@@ -1044,7 +1222,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 14px 20px;
+      padding: 15px 22px;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid var(--glass-border);
       color: #FFF;
@@ -1082,54 +1260,55 @@
       background: rgba(255, 255, 255, 0.12);
       border: none;
       color: #FFF;
-      padding: 4px 8px;
+      padding: 5px 10px;
       border-radius: 4px;
       font-size: 0.7rem;
       cursor: pointer;
       flex-shrink: 0;
       font-family: inherit;
+      transition: background 0.2s;
     }
     .btn-copy-code:hover {
-      background: rgba(255, 255, 255, 0.24);
+      background: rgba(255, 255, 255, 0.25);
     }
 
     .checksum-bar {
       margin-top: 28px;
-      padding: 14px 18px;
-      background: rgba(0, 0, 0, 0.5);
+      padding: 15px 20px;
+      background: rgba(0, 0, 0, 0.55);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 14px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--text-secondary);
       overflow-x: auto;
     }
     .btn-copy-hash {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.12);
       border: none;
       color: #FFF;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 6px;
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       cursor: pointer;
       flex-shrink: 0;
       font-family: inherit;
       transition: background 0.2s;
     }
     .btn-copy-hash:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
     }
 
     /* FOOTER */
     footer {
       border-top: 1px solid var(--glass-border);
-      padding: 48px 0 36px;
+      padding: 54px 0 38px;
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.86rem;
     }
     .footer-inner {
       display: flex;
@@ -1142,7 +1321,7 @@
     .footer-links {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 22px;
       list-style: none;
     }
     .footer-links a {
@@ -1154,30 +1333,30 @@
       color: #FFF;
     }
     .legal-notice {
-      font-size: 0.75rem;
-      line-height: 1.5;
-      color: rgba(245, 245, 247, 0.32);
+      font-size: 0.76rem;
+      line-height: 1.55;
+      color: rgba(245, 245, 247, 0.35);
       border-top: 1px solid rgba(255, 255, 255, 0.05);
-      padding-top: 20px;
+      padding-top: 22px;
     }
 
     /* Toast Notification */
     .toast {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: rgba(24, 24, 30, 0.95);
+      bottom: 28px;
+      right: 28px;
+      background: rgba(20, 20, 26, 0.95);
       border: 1px solid var(--glass-border-hover);
       color: #FFF;
-      padding: 12px 20px;
+      padding: 13px 22px;
       border-radius: var(--radius-pill);
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 600;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(12px);
       transform: translateY(100px);
       opacity: 0;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 1000;
       pointer-events: none;
     }
@@ -1186,10 +1365,21 @@
       opacity: 1;
     }
 
+    /* SCROLL REVEAL UTILITY */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* Responsive adjustments */
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .hero { padding: 48px 0 40px; }
+      .hero { padding: 56px 0 44px; }
       .island-pill.expanded {
         width: 100%;
         height: 240px;
@@ -1197,14 +1387,20 @@
       .sim-hardware-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+      .download-section-box {
+        padding: 28px 18px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="ambient-glow"></div>
-  <div class="ambient-orb orb-1"></div>
-  <div class="ambient-orb orb-2"></div>
+  <!-- Ambient Lights Canvas -->
+  <div class="ambient-canvas">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+  </div>
 
   <!-- NAVIGATION -->
   <header>
@@ -1238,12 +1434,17 @@
     <section class="hero">
       <div class="container">
         
-        <div class="pill-announcement">
+        <!-- NEW PUNCHY SHIMMER ANNOUNCEMENT PILL -->
+        <a href="#download" class="pill-announcement">
           <span class="indicator"></span>
-          <span>ORBIT v1.0.0 is live for Windows 10/11 & Apple macOS (iMac & MacBook)</span>
-        </div>
+          <span>✨ Introducing ORBIT 1.0 — Desktop Dynamic Island for Windows & Mac</span>
+          <span class="pill-arrow">→</span>
+        </a>
 
-        <h1 class="hero-title">Dynamic Island.<br>Reimagined for Windows & Mac.</h1>
+        <h1 class="hero-title">
+          Dynamic Island.<br>
+          <span class="gradient-text-shimmer">Reimagined for Windows & Mac.</span>
+        </h1>
         <p class="hero-sub">The iconic Dynamic Island desktop overlay brought to life on Windows 10 & 11 and Apple macOS (iMac & MacBook). Fluid spring physics, live hardware monitors, multi-channel earbud telemetry, synced lyrics, and zero background bloat.</p>
 
         <!-- Device Detection Banner (auto-detects Mac / Windows) -->
@@ -1278,117 +1479,122 @@
         </div>
 
         <!-- LIVE INTERACTIVE DYNAMIC ISLAND SIMULATOR -->
-        <div id="simulator" class="interactive-island-section">
-          <div class="interactive-island-wrapper">
+        <div id="simulator" class="interactive-island-section reveal">
+          <div class="interactive-island-wrapper" id="islandWrapper">
             <div class="sim-hint">
-              <span>Interactive Live Web Demo — Tap or Click Island to Expand</span>
+              <span>Interactive Live Web Demo — Click Island to Expand</span>
             </div>
 
-            <!-- SIMULATED ISLAND -->
-            <div id="islandPill" class="island-pill collapsed" onclick="toggleIsland()">
-              
-              <!-- Collapsed Content -->
-              <div class="island-collapsed-content" style="display:flex; width:100%; justify-content:space-between; align-items:center;">
-                <div class="pill-left">
-                  <div class="pill-wave">
-                    <span></span><span></span><span></span><span></span>
+            <!-- SIMULATED ISLAND WITH COLOR AURA -->
+            <div class="island-container">
+              <div class="island-aura" id="islandAura"></div>
+
+              <div id="islandPill" class="island-pill collapsed" onclick="toggleIsland()">
+                
+                <!-- Collapsed Content -->
+                <div class="island-collapsed-content" style="display:flex; width:100%; justify-content:space-between; align-items:center;">
+                  <div class="pill-left">
+                    <div class="pill-wave">
+                      <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <span style="color:#FFF;">Starboy · The Weeknd</span>
                   </div>
-                  <span style="color:#FFF;">Starboy · The Weeknd</span>
+                  <div class="pill-right">
+                    <span style="color:var(--accent-cyan); font-family:'JetBrains Mono',monospace;">88%</span>
+                    <svg style="width:16px; height:16px; fill:var(--accent-cyan);" viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
+                  </div>
                 </div>
-                <div class="pill-right">
-                  <span style="color:var(--accent-cyan); font-family:'JetBrains Mono',monospace;">88%</span>
-                  <svg style="width:16px; height:16px; fill:var(--accent-cyan);" viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
+
+                <!-- Expanded Content -->
+                <div class="island-expanded-content">
+                  <div class="sim-tabs" onclick="event.stopPropagation()">
+                    <button class="sim-tab-btn active" onclick="switchSimView('media')">Music</button>
+                    <button class="sim-tab-btn" onclick="switchSimView('hardware')">Hardware</button>
+                    <button class="sim-tab-btn" onclick="switchSimView('bluetooth')">Bluetooth</button>
+                  </div>
+
+                  <!-- Media View -->
+                  <div id="simViewMedia" class="sim-view active">
+                    <div class="sim-media-body">
+                      <div class="sim-album-art">
+                        <svg style="width:28px; height:28px; fill:#FFF;" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                      </div>
+                      <div class="sim-song-meta">
+                        <div class="sim-song-title">Starboy (feat. Daft Punk)</div>
+                        <div class="sim-song-artist">The Weeknd — Starboy</div>
+                        <div class="sim-lyrics-line">♪ I'm tryna put you in the worst mood, ah ♪</div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="sim-progress-bar">
+                        <div class="sim-progress-fill"></div>
+                      </div>
+                      <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--text-muted); font-family:'JetBrains Mono', monospace;">
+                        <span>1:42</span>
+                        <span>3:50</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Hardware View -->
+                  <div id="simViewHardware" class="sim-view">
+                    <div class="sim-hardware-grid">
+                      <div class="sim-hw-card">
+                        <div class="sim-hw-label">CPU</div>
+                        <div class="sim-hw-value" style="color:var(--accent-blue)">14%</div>
+                        <div class="sim-hw-bar"><div class="sim-hw-bar-fill" style="width:14%"></div></div>
+                      </div>
+                      <div class="sim-hw-card">
+                        <div class="sim-hw-label">RAM</div>
+                        <div class="sim-hw-value" style="color:var(--accent-purple)">7.8 GB</div>
+                        <div class="sim-hw-bar"><div class="sim-hw-bar-fill" style="width:51%; background:var(--accent-purple)"></div></div>
+                      </div>
+                      <div class="sim-hw-card">
+                        <div class="sim-hw-label">DISK</div>
+                        <div class="sim-hw-value" style="color:var(--accent-cyan)">1.2 MB/s</div>
+                        <div class="sim-hw-bar"><div class="sim-hw-bar-fill" style="width:8%; background:var(--accent-cyan)"></div></div>
+                      </div>
+                      <div class="sim-hw-card">
+                        <div class="sim-hw-label">NET</div>
+                        <div class="sim-hw-value" style="color:var(--accent-amber)">4.6 MB/s</div>
+                        <div class="sim-hw-bar"><div class="sim-hw-bar-fill" style="width:25%; background:var(--accent-amber)"></div></div>
+                      </div>
+                    </div>
+                    <div style="text-align:center; font-size:0.75rem; color:var(--text-secondary);">
+                      Apple Silicon M3 / Intel Core · 16 GB Unified Memory · Battery 88%
+                    </div>
+                  </div>
+
+                  <!-- Bluetooth View -->
+                  <div id="simViewBluetooth" class="sim-view">
+                    <div class="sim-bt-container">
+                      <div class="sim-bt-item">
+                        <div class="sim-bt-pct" style="color:var(--accent-cyan)">90%</div>
+                        <div class="sim-bt-sub">Left Earbud</div>
+                      </div>
+                      <div class="sim-bt-item">
+                        <div class="sim-bt-pct" style="color:var(--accent-cyan)">95%</div>
+                        <div class="sim-bt-sub">Right Earbud</div>
+                      </div>
+                      <div class="sim-bt-item">
+                        <div class="sim-bt-pct" style="color:var(--accent-blue)">75%</div>
+                        <div class="sim-bt-sub">Charging Case</div>
+                      </div>
+                    </div>
+                    <div style="display:flex; justify-content:center; gap:8px; margin-top:6px;">
+                      <span style="font-size:0.72rem; padding:3px 10px; background:rgba(48,209,88,0.15); color:var(--accent-cyan); border-radius:12px; font-weight:600;">ANC Active</span>
+                      <span style="font-size:0.72rem; padding:3px 10px; background:rgba(191,90,242,0.15); color:var(--accent-purple); border-radius:12px; font-weight:600;">Spatial 3D</span>
+                    </div>
+                  </div>
+
+                  <div class="sim-bottom-actions" onclick="event.stopPropagation()">
+                    <button class="btn-sim-toggle" onclick="toggleIsland()">Click to Collapse</button>
+                  </div>
                 </div>
+
               </div>
-
-              <!-- Expanded Content -->
-              <div class="island-expanded-content">
-                <div class="sim-tabs" onclick="event.stopPropagation()">
-                  <button class="sim-tab-btn active" onclick="switchSimView('media')">Music</button>
-                  <button class="sim-tab-btn" onclick="switchSimView('hardware')">Hardware</button>
-                  <button class="sim-tab-btn" onclick="switchSimView('bluetooth')">Bluetooth</button>
-                </div>
-
-                <!-- Media View -->
-                <div id="simViewMedia" class="sim-view active">
-                  <div class="sim-media-body">
-                    <div class="sim-album-art">
-                      <svg style="width:26px; height:26px; fill:#FFF;" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-                    </div>
-                    <div class="sim-song-meta">
-                      <div class="sim-song-title">Starboy (feat. Daft Punk)</div>
-                      <div class="sim-song-artist">The Weeknd — Starboy</div>
-                      <div class="sim-lyrics-line">♪ I'm tryna put you in the worst mood, ah ♪</div>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="sim-progress-bar">
-                      <div class="sim-progress-fill"></div>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--text-muted); font-family:'JetBrains Mono', monospace;">
-                      <span>1:42</span>
-                      <span>3:50</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Hardware View -->
-                <div id="simViewHardware" class="sim-view">
-                  <div class="sim-hardware-grid">
-                    <div class="sim-hw-card">
-                      <div class="sim-hw-label">CPU</div>
-                      <div class="sim-hw-value" style="color:var(--accent-blue)">14%</div>
-                      <div class="sim-hw-bar"><div class="sim-hw-bar-fill" style="width:14%"></div></div>
-                    </div>
-                    <div class="sim-hw-card">
-                      <div class="sim-hw-label">RAM</div>
-                      <div class="sim-hw-value" style="color:var(--accent-purple)">7.8 GB</div>
-                      <div class="sim-hw-bar"><div class="sim-hw-bar-fill" style="width:51%; background:var(--accent-purple)"></div></div>
-                    </div>
-                    <div class="sim-hw-card">
-                      <div class="sim-hw-label">DISK</div>
-                      <div class="sim-hw-value" style="color:var(--accent-cyan)">1.2 MB/s</div>
-                      <div class="sim-hw-bar"><div class="sim-hw-bar-fill" style="width:8%; background:var(--accent-cyan)"></div></div>
-                    </div>
-                    <div class="sim-hw-card">
-                      <div class="sim-hw-label">NET</div>
-                      <div class="sim-hw-value" style="color:var(--accent-amber)">4.6 MB/s</div>
-                      <div class="sim-hw-bar"><div class="sim-hw-bar-fill" style="width:25%; background:var(--accent-amber)"></div></div>
-                    </div>
-                  </div>
-                  <div style="text-align:center; font-size:0.75rem; color:var(--text-secondary);">
-                    Apple Silicon M3 / Intel Core · 16 GB Unified Memory · Battery 88%
-                  </div>
-                </div>
-
-                <!-- Bluetooth View -->
-                <div id="simViewBluetooth" class="sim-view">
-                  <div class="sim-bt-container">
-                    <div class="sim-bt-item">
-                      <div class="sim-bt-pct" style="color:var(--accent-cyan)">90%</div>
-                      <div class="sim-bt-sub">Left Earbud</div>
-                    </div>
-                    <div class="sim-bt-item">
-                      <div class="sim-bt-pct" style="color:var(--accent-cyan)">95%</div>
-                      <div class="sim-bt-sub">Right Earbud</div>
-                    </div>
-                    <div class="sim-bt-item">
-                      <div class="sim-bt-pct" style="color:var(--accent-blue)">75%</div>
-                      <div class="sim-bt-sub">Charging Case</div>
-                    </div>
-                  </div>
-                  <div style="display:flex; justify-content:center; gap:8px; margin-top:6px;">
-                    <span style="font-size:0.72rem; padding:3px 10px; background:rgba(48,209,88,0.15); color:var(--accent-cyan); border-radius:12px; font-weight:600;">ANC Active</span>
-                    <span style="font-size:0.72rem; padding:3px 10px; background:rgba(191,90,242,0.15); color:var(--accent-purple); border-radius:12px; font-weight:600;">Spatial 3D</span>
-                  </div>
-                </div>
-
-                <div class="sim-bottom-actions" onclick="event.stopPropagation()">
-                  <button class="btn-sim-toggle" onclick="toggleIsland()">Click to Collapse</button>
-                </div>
-              </div>
-
             </div>
+
           </div>
         </div>
 
@@ -1398,13 +1604,13 @@
     <!-- REAL APPLICATION SHOWCASE -->
     <section id="gallery">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
           <div class="section-tag">Authentic Interface</div>
           <h2 class="section-title">Captured Directly from ORBIT.</h2>
           <p class="section-sub">No concept renders. Every screenshot below is captured at 2× Retina resolution directly from our running desktop installation.</p>
         </div>
 
-        <div class="gallery-container">
+        <div class="gallery-container reveal">
           
           <!-- Gallery Navigation Tabs -->
           <div class="gallery-nav" id="galleryTabs">
@@ -1419,9 +1625,10 @@
             <button class="gallery-tab" data-shot="bar">💊 Compact Pill</button>
           </div>
 
-          <!-- Stage Display Area -->
+          <!-- Stage Display Area with Ambient Backlight -->
           <div class="gallery-stage">
             <div class="stage-preview">
+              <div class="stage-ambient-glow" id="stageGlow"></div>
               <img id="stageImg" src="assets/shots/system.png" alt="ORBIT System Usage Screenshot">
             </div>
 
@@ -1454,7 +1661,7 @@
     <!-- CORE FEATURES GRID -->
     <section id="features">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
           <div class="section-tag">Crafted with Precision</div>
           <h2 class="section-title">Built for Performance. Designed to Disappear.</h2>
           <p class="section-sub">Every detail in ORBIT is tuned for speed, unobtrusive elegance, and deep native operating system integration on Windows and Mac.</p>
@@ -1462,7 +1669,7 @@
 
         <div class="grid-features">
           
-          <div class="feature-card">
+          <div class="feature-card reveal">
             <div class="feature-card-icon" style="color:var(--accent-cyan)">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
             </div>
@@ -1470,7 +1677,7 @@
             <p class="feature-card-desc">The Dynamic Island automatically pulses in the app's brand accent: vibrant emerald green for WhatsApp messages, royal blue for system alerts, and warm amber for notifications.</p>
           </div>
 
-          <div class="feature-card">
+          <div class="feature-card reveal">
             <div class="feature-card-icon" style="color:var(--accent-purple)">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
             </div>
@@ -1478,7 +1685,7 @@
             <p class="feature-card-desc">Tracks Spotify, Apple Music, and media players in real-time. Features album color aura extraction that dynamically transitions between tracks, plus millisecond-accurate synchronized lyrics.</p>
           </div>
 
-          <div class="feature-card">
+          <div class="feature-card reveal">
             <div class="feature-card-icon" style="color:var(--accent-blue)">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14.88 16.29L13 18.17V14.41l1.88 1.88M13 5.83l1.88 1.88L13 9.59V5.83M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4zm-2.83 8.58L13 14.41v3.76l1.88-1.88z"/></svg>
             </div>
@@ -1486,7 +1693,7 @@
             <p class="feature-card-desc">Reads left and right earbud batteries individually plus the charging case battery. Toggle Noise Cancelling, Transparency, Normal mode, and Spatial 3D Audio right from the island.</p>
           </div>
 
-          <div class="feature-card">
+          <div class="feature-card reveal">
             <div class="feature-card-icon" style="color:var(--accent-amber)">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
             </div>
@@ -1494,7 +1701,7 @@
             <p class="feature-card-desc">Drag any text, image, or snippet to the island to pin it. Drag it back out to any application whenever you need it. Includes one-click clear and automatic history management.</p>
           </div>
 
-          <div class="feature-card">
+          <div class="feature-card reveal">
             <div class="feature-card-icon" style="color:#FFF">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
             </div>
@@ -1502,7 +1709,7 @@
             <p class="feature-card-desc">Toggle "Start ORBIT with System" directly from the built-in Settings tab. Uses native OS startup registration — no scheduled tasks, no UAC prompts, and no background daemon bloat.</p>
           </div>
 
-          <div class="feature-card">
+          <div class="feature-card reveal">
             <div class="feature-card-icon" style="color:var(--accent-blue)">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
             </div>
@@ -1517,32 +1724,32 @@
     <!-- SPECS & PERFORMANCE -->
     <section id="specs">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
           <div class="section-tag">Tested & Verified</div>
           <h2 class="section-title">Built Lean. Truly Lightweight.</h2>
           <p class="section-sub">Optimized for both Windows and Apple macOS desktop environments with minimal resource consumption.</p>
         </div>
 
         <div class="benchmarks-grid">
-          <div class="benchmark-card">
+          <div class="benchmark-card reveal">
             <div class="benchmark-num cyan">0.4%</div>
             <div class="benchmark-label">Idle CPU Consumption</div>
             <div class="benchmark-desc">Falls to sub-1% when collapsed in floating pill state; peaks briefly at ~2.5% only during fluid open/close animations.</div>
           </div>
 
-          <div class="benchmark-card">
+          <div class="benchmark-card reveal">
             <div class="benchmark-num blue">190 MB</div>
             <div class="benchmark-label">Active Memory Footprint</div>
             <div class="benchmark-desc">Includes the isolated rendering sandbox, native operating system bindings, and lyric parser combined.</div>
           </div>
 
-          <div class="benchmark-card">
+          <div class="benchmark-card reveal">
             <div class="benchmark-num purple">60 FPS</div>
             <div class="benchmark-label">GPU Hardware Acceleration</div>
             <div class="benchmark-desc">Silky smooth spring physics powered by Chromium's hardware compositor with zero frame drops.</div>
           </div>
 
-          <div class="benchmark-card">
+          <div class="benchmark-card reveal">
             <div class="benchmark-num" style="color:#FFF;">Universal</div>
             <div class="benchmark-label">Cross-Platform Ready</div>
             <div class="benchmark-desc">Built for Windows 10/11 (64-bit) and Apple macOS (Apple Silicon M1-M4 & Intel iMac / MacBook).</div>
@@ -1551,15 +1758,15 @@
       </div>
     </section>
 
-    <!-- DOWNLOAD SECTION (WINDOWS & MAC) -->
+    <!-- DUAL DOWNLOAD SECTION (WINDOWS & MAC) -->
     <section id="download">
       <div class="container">
-        <div class="download-section-box">
+        <div class="download-section-box reveal">
           
           <div style="text-align:center; max-width:680px; margin:0 auto 20px;">
             <div class="section-tag">Direct Downloads</div>
-            <h2 style="font-size:2.2rem; font-weight:800; letter-spacing:-0.02em; margin-bottom:10px;">Choose Your Platform</h2>
-            <p style="color:var(--text-secondary); font-size:0.95rem;">ORBIT runs natively on Windows 10 & 11 and Apple macOS. 100% free and open-source.</p>
+            <h2 style="font-size:2.3rem; font-weight:800; letter-spacing:-0.02em; margin-bottom:12px;">Choose Your Platform</h2>
+            <p style="color:var(--text-secondary); font-size:0.96rem;">ORBIT runs natively on Windows 10 & 11 and Apple macOS. 100% free and open-source.</p>
           </div>
 
           <div class="download-dual-grid">
@@ -1659,8 +1866,8 @@
   <footer>
     <div class="container">
       <div class="footer-inner">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <img src="logo.png" alt="ORBIT Logo" style="width:24px; height:24px; border-radius:6px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <img src="logo.png" alt="ORBIT Logo" style="width:26px; height:26px; border-radius:7px;">
           <span style="font-weight:700; color:#FFF;">ORBIT</span>
           <span>· Created by Sh3hann</span>
         </div>
@@ -1681,14 +1888,47 @@
   <!-- TOAST NOTIFICATION -->
   <div id="toast" class="toast">Copied to clipboard!</div>
 
-  <!-- INTERACTIVE LOGIC -->
+  <!-- INTERACTIVE LOGIC & ANIMATIONS -->
   <script>
-    // Gallery Data with actual screenshots
+    // 1. Mouse Spotlight Tracking on Canvas
+    window.addEventListener('pointermove', (e) => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    }, { passive: true });
+
+    // 2. Interactive Island Parallax 3D Tilt
+    const islandWrapper = document.getElementById('islandWrapper');
+    if (islandWrapper) {
+      islandWrapper.addEventListener('mousemove', (e) => {
+        const rect = islandWrapper.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        const rotX = -(y / rect.height) * 8;
+        const rotY = (x / rect.width) * 8;
+        islandWrapper.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`;
+      });
+      islandWrapper.addEventListener('mouseleave', () => {
+        islandWrapper.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+      });
+    }
+
+    // 3. Scroll Reveal Observer
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // 4. Gallery Data with actual screenshots and ambient backlight colors
     const galleryData = {
       system: {
         img: 'assets/shots/system.png',
         cat: 'Hardware Intelligence',
         title: 'Real-Time Core Telemetry',
+        glow: 'rgba(59, 130, 246, 0.35)',
         desc: 'Instant visibility into every logical CPU core, physical memory load, disk write speed, network throughput, and battery life without opening Task Manager.',
         points: [
           'Individual multi-core CPU bar graphs refreshed every 1.5s with negligible overhead',
@@ -1700,6 +1940,7 @@
         img: 'assets/shots/bluetooth.png',
         cat: 'Audio & Peripherals',
         title: 'Earbud & Case Battery + ANC',
+        glow: 'rgba(48, 209, 88, 0.35)',
         desc: 'Native support for Bluetooth earbuds including Soundcore Liberty 4 NC. See individual left/right earbud battery percentages and charging case status in real time.',
         points: [
           'Live battery percentages for Left Earbud, Right Earbud, and Charging Case',
@@ -1711,6 +1952,7 @@
         img: 'assets/shots/alerts.png',
         cat: 'Notification Center',
         title: 'WhatsApp & System Alerts',
+        glow: 'rgba(37, 211, 102, 0.4)',
         desc: 'Dynamic Island smoothly expands and flashes in the app’s brand color when new messages arrive. Instant previews with badge counts for unread notifications.',
         points: [
           'Dynamic emerald green accent for incoming WhatsApp conversations',
@@ -1722,6 +1964,7 @@
         img: 'assets/shots/clipboard.png',
         cat: 'Productivity Shelf',
         title: 'Smart Drag & Drop Clipboard',
+        glow: 'rgba(255, 159, 10, 0.35)',
         desc: 'Drag anything into the Dynamic Island to store it on your shelf. Drag it back out to copy into any text editor, browser, or message.',
         points: [
           'Live clipboard history with timestamp tracking and pin support',
@@ -1733,6 +1976,7 @@
         img: 'assets/shots/apps.png',
         cat: 'Quick Launcher',
         title: 'Instant Apps & Google Search',
+        glow: 'rgba(168, 85, 247, 0.35)',
         desc: 'Launch your most-used apps with a single tap, or type directly into the island to perform instant Google searches.',
         points: [
           'One-click launch icons for Browser, Terminal, Explorer/Finder, Notes, and Settings',
@@ -1744,6 +1988,7 @@
         img: 'assets/shots/hud.png',
         cat: 'System Controls',
         title: 'Volume, Brightness & Power HUD',
+        glow: 'rgba(14, 165, 233, 0.35)',
         desc: 'Control master audio volume, display brightness, and sleep/restart states without reaching for the taskbar or hardware keys.',
         points: [
           'Smooth slider controls for master audio volume with live percentage feedback',
@@ -1755,6 +2000,7 @@
         img: 'assets/shots/clock.png',
         cat: 'Time & Focus',
         title: 'World Clock & Pomodoro Timers',
+        glow: 'rgba(244, 63, 94, 0.35)',
         desc: 'Keep track of date, time, and focus sessions. Quick preset timers let you start 5m, 15m, 25m Pomodoro, or 1h focus sessions with audio chimes.',
         points: [
           'Digital high-contrast time display with full date and weekday',
@@ -1766,6 +2012,7 @@
         img: 'assets/shots/settings.png',
         cat: 'Configuration',
         title: 'Native Auto-Start & Pins',
+        glow: 'rgba(148, 163, 184, 0.35)',
         desc: 'Customize ORBIT to fit your exact workflow. Pin your favorite tabs to the navigation bar and enable automatic startup with your computer.',
         points: [
           'Native "Start ORBIT with System" toggle using clean OS registry & login item APIs',
@@ -1777,6 +2024,7 @@
         img: 'assets/shots/bar.png',
         cat: 'Idle Presence',
         title: 'Minimalist Collapsed Status Pill',
+        glow: 'rgba(192, 132, 252, 0.35)',
         desc: 'When not in active use, ORBIT rests seamlessly at the top center of your display as an unobtrusive, beautiful status capsule.',
         points: [
           'Live battery percentage indicator and charging status animation',
@@ -1786,9 +2034,10 @@
       }
     };
 
-    // Tab switcher logic
+    // Tab switcher logic with Backlight Glow
     const galleryTabs = document.querySelectorAll('.gallery-tab');
     const stageImg = document.getElementById('stageImg');
+    const stageGlow = document.getElementById('stageGlow');
     const stageCat = document.getElementById('stageCategory');
     const stageTitle = document.getElementById('stageTitle');
     const stageDesc = document.getElementById('stageDesc');
@@ -1803,12 +2052,13 @@
         galleryTabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
 
-        // Smooth fade transition
+        // Smooth fade & scale transition
         stageImg.style.opacity = '0';
-        stageImg.style.transform = 'scale(0.96)';
+        stageImg.style.transform = 'scale(0.96) translateY(6px)';
 
         setTimeout(() => {
           stageImg.src = data.img;
+          stageGlow.style.background = data.glow;
           stageCat.textContent = data.cat;
           stageTitle.textContent = data.title;
           stageDesc.textContent = data.desc;
@@ -1821,16 +2071,24 @@
           `).join('');
 
           stageImg.style.opacity = '1';
-          stageImg.style.transform = 'scale(1)';
-        }, 150);
+          stageImg.style.transform = 'scale(1) translateY(0)';
+        }, 160);
       });
     });
 
-    // Interactive Island Simulator
+    // 5. Interactive Island Simulator
     const islandPill = document.getElementById('islandPill');
+    const islandAura = document.getElementById('islandAura');
+
     function toggleIsland() {
+      const isExpanding = islandPill.classList.contains('collapsed');
       islandPill.classList.toggle('expanded');
       islandPill.classList.toggle('collapsed');
+      if (islandAura) {
+        islandAura.style.width = isExpanding ? '95%' : '80%';
+        islandAura.style.height = isExpanding ? '95%' : '80%';
+        islandAura.style.opacity = isExpanding ? '0.9' : '0.7';
+      }
     }
 
     function switchSimView(viewName) {
@@ -1850,9 +2108,19 @@
 
       const activeBtn = Array.from(btns).find(b => b.textContent.toLowerCase() === viewName.toLowerCase());
       if (activeBtn) activeBtn.classList.add('active');
+
+      if (islandAura) {
+        if (viewName === 'media') {
+          islandAura.style.background = 'radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, rgba(236, 72, 153, 0.25) 50%, transparent 80%)';
+        } else if (viewName === 'hardware') {
+          islandAura.style.background = 'radial-gradient(circle, rgba(10, 132, 255, 0.4) 0%, rgba(48, 209, 88, 0.25) 50%, transparent 80%)';
+        } else if (viewName === 'bluetooth') {
+          islandAura.style.background = 'radial-gradient(circle, rgba(48, 209, 88, 0.4) 0%, rgba(191, 90, 242, 0.25) 50%, transparent 80%)';
+        }
+      }
     }
 
-    // Platform Detection (Mac / iMac vs Windows)
+    // 6. Platform Detection (Mac / iMac vs Windows)
     function detectPlatform() {
       const ua = navigator.userAgent || navigator.vendor || window.opera;
       const isMac = /Macintosh|Mac OS X/i.test(ua) && !/iPhone|iPad|iPod/i.test(ua);
@@ -1885,7 +2153,7 @@
     }
     detectPlatform();
 
-    // Copy Toast Helper
+    // 7. Copy Toast Helpers
     function showToast(msg) {
       const toast = document.getElementById('toast');
       toast.textContent = msg;
